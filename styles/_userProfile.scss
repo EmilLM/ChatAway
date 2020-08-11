@@ -1,0 +1,108 @@
+.sidebarToggler {
+    padding: 10px !important;
+}
+.profileWindow {
+    height: 79.7vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+
+    .main-info {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align:center;
+        height: 30vh;
+    }
+}
+
+.details {
+    min-height: 25vh;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    
+    .MuiAvatar-img {
+        width: auto !important;
+        border-radius: 50%;
+    }
+    .profileImage {
+        height: 100px;
+        width: auto;
+        margin: 0 10px 10px 10px;
+    }
+    .userDetails {
+        color: navy;
+        font-size: 18px;
+        font-weight: 700;
+        // margin: 0 10px 40px 10px;
+        
+        div {
+            padding-top: 10px;
+            color: black;
+            span {
+                font-size: 16px;
+                color: navy;
+                padding-left: 5px;
+            }
+        }
+        
+    }
+    .uploadAvatar {
+        text-align: center;
+        color: navy;
+        padding: 7px 10px;
+        margin-left: 15px;
+        &:hover {
+            border-bottom: 3px solid blue;
+            color: blue;
+
+        }
+    }
+    
+    
+}
+
+
+// user Profile sidebar styles
+.optionsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-top: 50px;
+
+}
+
+// profile options styles
+
+.profileOptions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 45vh;
+  
+    .editText {
+        display: flex;
+        div {
+            font-size: 18px;
+            font-weight: 500;
+            margin-left: 10px;
+        }
+    }
+    form {
+        height: 35vh;
+        width: 75%;
+        max-width: 300px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+        button {
+            width: 100%;
+        }
+    }
+
+}

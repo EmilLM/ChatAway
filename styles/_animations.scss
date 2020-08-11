@@ -1,0 +1,68 @@
+
+// drawer sidebar arrow animations
+.open {
+    transform: rotate(180deg);
+    transition: transform 0.2s ease;
+}
+.revert {
+    transition: transform 0.2s ease;
+}
+.rooms {
+    transition: all 0.2 ease;
+}
+
+// button shine animation
+
+   
+.customButton {
+    position: relative !important;
+    color: #fff !important;
+    font-size: 15px !important;
+    border: 0 !important;
+    transition: ease-in 1s !important;
+    overflow: hidden !important;
+    &:focus{
+        outline: 0 !important;
+    }
+    &:before{
+        content: '' !important;
+        display: block !important;
+        position: absolute !important;
+        background: rgba(255,255,255,0.5) !important;
+        width: 60px !important;
+        height: 100% !important;
+        left: 0 !important;
+        top: 0 !important; 
+        opacity: .5 !important;
+        filter: blur(30px) !important;
+        transform: translateX(-100px)  skewX(-15deg) !important;
+    }
+    &:after{
+        content: '' !important;
+        display: block !important;
+        position: absolute !important;
+        background: rgba(255,255,255,0.2) !important;
+        width: 30px !important;
+        height: 100% !important;
+        left: 30px !important;
+        top: 0 !important;
+        opacity: 0 !important;
+        filter: blur(5px) !important;
+        transform: translateX(-100px) skewX(-15deg) !important;
+    }
+    &:hover{
+        background: #703aec !important; 
+        cursor: pointer !important;
+        &:before{
+        transform: translateX(300px)  skewX(-15deg) !important;  
+        opacity: 0.6 !important;
+        transition: 2s !important;
+        }
+        &:after{
+        transform: translateX(300px) skewX(-15deg) !important;  
+        opacity: 1 !important;
+        transition: 2s !important;
+        }
+    }
+}
+

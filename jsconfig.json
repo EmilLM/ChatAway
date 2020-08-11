@@ -1,0 +1,9 @@
+{
+    "compilerOptions": {
+      "baseUrl": ".",
+      "paths": {
+        "@/ChatApp*": ["components/ChatApp*"],
+        "@/General*": ["components/General*"]
+      }
+    }
+  }

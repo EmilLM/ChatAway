@@ -1,0 +1,126 @@
+#chatWindow {
+  // -0.2vh for border +in footer
+  height: 79.7vh;
+  padding: 0;
+}
+
+.messageForm {
+  height: 10vh;
+  width: 100%;
+  border-top: 1px solid navy;
+  // display: flex;
+  // align-items: center;
+  // justify-content: space-between;
+    input {
+      border: none;
+      margin-top: 1.5vh;
+      width: 80%;
+      outline: none;
+      font-size: 20px;
+      margin-left: 15px;
+    }
+    button {
+      margin-left: 10px;
+      border: none;
+      background: none;
+      outline: none;
+      color: navy;
+      &:hover {
+        color: red;
+      }
+    }
+
+}
+
+.joinRoom {
+  height:62vh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  .roomDescription {
+    margin: 20px;
+  }
+  .messageList {
+
+    padding: 10px 0 10px 20px;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: flex-start;
+    overflow: auto;
+    height: 100%;
+    &::-webkit-scrollbar {
+      width: 6px;
+      background-color: white;
+    }
+  }
+}
+.defaultWindow {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 85%;
+  img {
+    width: 50%;
+    min-width: 300px;
+  }
+  div {
+    padding: 0 20px;
+    min-width: 300px;
+  }
+}
+.roomInfo {
+  height: 8vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+  border-bottom: 1px solid navy;
+}
+
+.message {
+  margin-bottom: 10px;
+  margin-left: 20px;
+  height: auto;
+  // width: 250px !important;
+  max-width: 250px !important;
+  .sender {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    margin-left: -15px;
+    .MuiAvatar-root {
+      width: 25px;
+      height: 25px;
+      margin-right: 5px;
+    }
+  }
+  .text {
+    background: cornflowerblue;
+    padding: 5px 10px;
+    color: white;
+  }
+  .speech-bubble {
+    position: relative;
+    border-radius: .4em;
+  }
+  
+  .speech-bubble:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border: 16px solid transparent;
+    border-bottom-color:cornflowerblue;
+    border-top: 0;
+    border-left: 0;
+    // margin-left: -12px;
+    margin-top: -12px;
+  }
+
+  
+}
+

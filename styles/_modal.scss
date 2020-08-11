@@ -1,0 +1,58 @@
+
+.roomForm {
+    height: 100%;
+    width: 100%;   
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    
+}
+#chatForm {
+    display: flex;
+    align-items: flex-start !important; 
+    justify-content: flex-start!important;
+    margin-bottom: 15px;
+    .chatForm {
+        display: flex;
+        justify-content: space-between;
+        button {
+            margin-left: 65px;
+        }
+        .MuiInputBase-fullWidth {
+            width: 125% !important;
+        }
+        input {
+            text-transform: capitalize;
+        }
+    }
+    .searchResults {
+        width: 100%;
+        height: 100%;
+        margin-top: 20px;
+        padding: 0;
+        li {
+            border-bottom: 1px solid gray;
+            padding: 5px 2px;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            img {
+                width: 25px;
+                height: 25px;
+                border-radius: 50%;
+            }
+            div {
+                display: flex;
+                align-items: center;
+                a {
+                    margin-right: 5px;
+                }
+                div {
+                    font-weight: 700;
+                    font-size: 18px;
+                }
+            }
+        }
+    }
+    
+}

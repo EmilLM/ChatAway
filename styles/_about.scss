@@ -1,0 +1,40 @@
+.about {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    text-align: center;
+    margin: 30px 0;
+    .aboutDescription {
+        margin: 0 20px;
+    }
+    .aboutDoc {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        text-align: left !important;
+        width: 80%;
+        max-width: 450px;
+        h2, h4, a {
+            text-align: center;
+        }
+        
+    }
+    h3 {
+        text-align: center;
+    }
+    ul {
+        margin-bottom: 30px;
+    }
+    li {
+        padding-top: 5px;
+    }
+   
+}
+.stack {
+    text-align: center;
+}
+.github {
+    font-weight: 700;
+    font-size: 20px;
+}
