@@ -15,11 +15,11 @@ const devTransporter = nodemailer.createTransport({
 
 devTransporter.use('compile', hbs({
   viewEngine: {
-    partialsDir: 'D:/Projects/next.js projects/ChatApp/chat-app/views/',
-    layoutsDir: 'D:/Projects/next.js projects/ChatApp/chat-app/views/',
+    partialsDir: `${__dirname}/../../views`,
+    layoutsDir: `${__dirname}/../../views`,
     defaultLayout: '',
   },
-  viewPath: 'D:/Projects/next.js projects/ChatApp/chat-app/views/',
+  viewPath: `${__dirname}/../../views`,
   extName: '.hbs'
 }));
 
@@ -35,11 +35,11 @@ const prodTransporter = nodemailer.createTransport({
 
 prodTransporter.use('compile', hbs({
   viewEngine: {
-    partialsDir: 'D:/Projects/next.js projects/ChatApp/chat-app/views/',
-    layoutsDir: 'D:/Projects/next.js projects/ChatApp/chat-app/views/',
+    partialsDir: `${__dirname}/../../views`,
+    layoutsDir: `${__dirname}/../../views`,
     defaultLayout: '',
   },
-  viewPath: 'D:/Projects/next.js projects/ChatApp/chat-app/views/',
+  viewPath: `${__dirname}/../../views`,
   extName: '.hbs'
 }));
 
@@ -53,9 +53,9 @@ module.exports = class Email {
   newTransport() {
     if (process.env.NODE_ENV === 'production') {
       // sendgrid
-      return devTransporter;
+      return prodTransporter;
     }
-    return prodTransporter;
+    return devTransporter;
   }
 
   async send (template, subject) {

@@ -4,12 +4,14 @@ import LockIcon from '@material-ui/icons/Lock';
 
 import axios from 'axios';
 import Router from "next/router";
+import Link from "next/link"
 import UserContext from '@/General/UserContext'
 
 import { Formik, Form} from 'formik';
 import * as Yup from 'yup';
 import FormikInput from "@/General/FormikInput";
 import FormikCheckbox from "@/General/FormikCheckbox"
+
 
 import Head from "next/head";
 
@@ -90,9 +92,13 @@ const LoginPage = () => {
                             {!isLoading?"Submit":<CircularProgress style={{color:"white"}} size={25.5}/>}
                         </Button>
                         
-                        <div className="options links"> 
-                            <a href="/signup">Create new account!</a>
-                            <a href="/forgotPassword">Forgot password?</a>
+                        <div className="options links">
+                            <Link href="/signup">
+                                <button className="noButtonStyle">Create new account!</button>
+                            </Link>
+                            <Link href="/forgotPassword">
+                                <button className="noButtonStyle">Forgot password?</button>
+                            </Link> 
                         </div>
                     </Form>
                 </Formik>

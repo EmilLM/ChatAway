@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
@@ -59,7 +59,7 @@ const ProfileDetails = ({data}) => {
                     </IconButton>
                 </form>
             </div>
-            {/* on sm overlaps with options comps */}
+            
             <div className="userDetails">
                 <div>Name: <span>{data.doc.username}</span></div>
                 <div>Email: <span>{data.doc.email}</span></div>

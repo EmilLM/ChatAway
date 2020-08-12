@@ -6,7 +6,7 @@ import FormikInput from "@/General/FormikInput";
 import * as Yup from 'yup';
 import axios from 'axios';
 import Head from "next/head";
-
+import Link from "next/link"
 
 const  ForgotPassword = () => {
 
@@ -60,8 +60,12 @@ const  ForgotPassword = () => {
                             {!isLoading?"Submit":<CircularProgress style={{color:"white"}} size={25.5}/>}
                         </Button>
                         <div className="options links"> 
-                            <a href="/signup">Sign Up</a>
-                            <a href="/login">Sign In</a>
+                            <Link href="/signup">
+                                <a href="/signup noButtonStyle">Sign Up</a>
+                            </Link>
+                            <Link href="/login">
+                                <a href="/login noButtonStyle">Sign In</a>
+                            </Link>
                         </div>
                     </Form>
                 </Formik>

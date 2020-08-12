@@ -75,6 +75,6 @@ app.use('/api/messages', messagesRouter);
 app.use('/api/chat', chatRouter);
 
 
-app.use(globalErrorHandler);
+// app.use(globalErrorHandler);
 
 module.exports = app;

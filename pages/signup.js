@@ -1,7 +1,7 @@
-
-
 import React, {useState, useEffect, useContext} from "react";
 import Head from "next/head";
+import Link from "next/link"
+
 import {Button, CircularProgress} from '@material-ui/core';
 import PersonAdd from "@material-ui/icons/PersonAdd"
 import axios from 'axios';
@@ -112,8 +112,9 @@ const SignupPage = () => {
                         <Button variant="contained" color="primary" type="submit" className="customButton" disabled={isLoading}>
                             {!isLoading?"Submit":<CircularProgress style={{color:"white"}} size={25.5}/>}
                         </Button>
-                        
-                        <a href="/login" className="signup"> Already have an account? Login </a>
+                        <Link href="/login">
+                            <button className="signup noButtonStyle"> Already have an account? Login </button>
+                        </Link>
                         
                     </Form>
                 </Formik>

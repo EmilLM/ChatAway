@@ -21,6 +21,7 @@ export default function UserInfo() {
         <div className="userInfo" >
             <Link href="/user-profile/main" passHref>
                 <a>
+                    
                     <Avatar src={`/uploads/userAvatars/${loggedInUser.avatar}`} 
                         alt="user-image" className="user-image">
                         {loggedInUser.username[0]}

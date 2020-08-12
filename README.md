@@ -23,8 +23,50 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/zeit/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+ChatAway
+Description
+A work in progress but functional chat app similar to Slack, having both room and direct chat.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Developed as a way to supplement my front-end skills with new back-end abilities.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+The information below only applies to the current state of the app. Being a proof of my abilities /work in progress, the app will be gradually updated as I improve my skills and add new features.
+
+Disclaimer: Missing features and links that do not work as intended means that part was not implemented yet.
+
+Features
+Main features of the application are:
+Authentication: User sign up, log in, , log out, forgot password/reset password by email.
+
+Chat features: Room chat, direct friend chat, edit user profile: name, email, password, avatar, delete account.
+
+UX: Server-side rendered (SSR), fully responsive design, complete user privacy, great account/data security.
+
+Documentation
+Github code
+Main stack (MERN): MongoDB, Express, React, Node
+
+Secondary stack: Next.js, Material-UI
+
+Dependencies:
+Security: bcryptjs, express-mongo-sanitize, express-rate-limit, helmet hpp, json web token, xss-clean, validator, cors.
+
+Data fetching: axios, useSWR.
+
+Data modelling: mongoose, mongoDB.
+
+Forms/Image processing: Formik, Yup, Multer, Sharp.
+
+Email: nodemailer, nodemailer-express-handlebars, html-to-text, SendGrid.
+
+Routes:
+Postman API routes link
+Environment variables
+Required environmental variables in this project include:
+DATABASE: MongoDB ChatAway connection string
+DATABASE_PASSWORD: MongoDB ChatAway database password
+JWT_SECRET: the secret string required for password encryption
+JWT_EXPIRES_IN: the time that the user token lasts
+JWT_COOKIE_EXPIRES_IN: the time that the user cookie lasts
+EMAIL_FROM: the ChatAway mail account
+SENDGRID_USERNAME: the SendGrid username for nodemailer
+SENDGRID_PASSWORD: the SendGrid password for nodemailer

@@ -14,11 +14,11 @@
 
 # production
 /build
-
+/.next
 # misc
 .DS_Store
 TODO
-
+/public/uploads
 # debug
 npm-debug.log*
 yarn-debug.log*
