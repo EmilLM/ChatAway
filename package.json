@@ -29,7 +29,7 @@
     "hpp": "^0.2.3",
     "html-to-text": "^5.1.1",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.9.27",
+    "mongoose": "^5.9.28",
     "multer": "^1.4.2",
     "next": "9.4.1",
     "nodemailer": "^6.4.11",
@@ -42,11 +42,11 @@
     "swr": "^0.2.3",
     "validator": "^13.1.1",
     "xss-clean": "^0.1.1",
-    "yup": "^0.29.2"
+    "yup": "^0.29.3"
   },
   "devDependencies": {
     "eslint": "^7.6.0",
-    "eslint-plugin-react": "^7.20.5",
+    "eslint-plugin-react": "^7.20.6",
     "eslint-plugin-react-hooks": "^4.0.8"
   },
   "engines": {

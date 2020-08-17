@@ -21,7 +21,7 @@ const DirectChat = ({chat, status}) => {
         onMouseDown={ e=> e.preventDefault()}
         onDoubleClick={()=>addUserToChat(chat._id)}
         >
-            {chat.participants.filter( (name) =>  name !== loggedInUser.username)}
+            {chat?.participants.filter( (name) =>  name !== loggedInUser?.username)}
             {hover && 
             <IconButton className={"closeChat"} onClick={() => {
                 removeChat(chat._id);

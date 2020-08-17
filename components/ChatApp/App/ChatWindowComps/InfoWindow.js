@@ -10,8 +10,9 @@ import IconButton from '@material-ui/core/IconButton';
 export default function InfoWindow({toggle}) {
     const {userInRoom, userInChat} = useContext(ChatAppContext);
     const {loggedInUser} = useContext(UserContext);
+    
     let chatWith
-    if (userInChat) {chatWith = userInChat.participants.filter( (name) =>  name !== loggedInUser.username) }
+    if (userInChat && loggedInUser) {chatWith = userInChat.participants.filter( (name) =>  name !== loggedInUser?.username) }
 
     if (userInRoom ) return (
         <div className="roomInfo">

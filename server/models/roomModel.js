@@ -8,7 +8,7 @@ const roomsSchema = new mongoose.Schema ({
         required: [true, 'Room requires a name'],
         maxlength: [20, 'Room name must have max 30 characters'],
         minlength: [3, 'Room name must be longer than 3 characters'],
-        // validate: [validator.isAlphanumeric, "Room name must only contain letters and numbers"]
+        validate: [validator.isAlphanumeric, "Room name must only contain letters and numbers"]
     },
     users: [{
         type: mongoose.Schema.ObjectId,

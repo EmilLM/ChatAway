@@ -15,10 +15,7 @@ const chatSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     }],
-    name: {
-        type: String,
-        unique: true
-    },
+    name: String,
     timestamps: Date
 });
 

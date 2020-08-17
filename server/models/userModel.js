@@ -34,7 +34,7 @@ const usersSchema =  new mongoose.Schema({
             validator: function(el) {
                 return el === this.password;
             },
-            message: 'Passwords do not match!'
+            message: 'Passwords do not match'
         }
     },
     passwordChangedAt: Date,
@@ -85,11 +85,6 @@ const usersSchema =  new mongoose.Schema({
         default: true,
         select: false,
     },
-    // ?duplicated id for some reason
-    // id : {
-    //     type: String,
-    //     select: false,
-    // },
 
     slug: String,
 
