@@ -14,7 +14,7 @@ const signToken = id => {
 };
 
 // sign in helper function 
-const createSendToken = (user, statusCode, res, rememberMe) => {
+const createSendToken = (user, statusCode, req, res, rememberMe) => {
     const token = signToken(user._id);
     
     // persistent login
@@ -26,10 +26,11 @@ const createSendToken = (user, statusCode, res, rememberMe) => {
     const cookieOptions = {
         expires: new Date(Date.now() + maxAge),
         httpOnly: true,
+        secure : req.secure  || req.headers('x-forward-proto') === 'https',
         sameSite: 'strict',
         path: '/'
     };
-    // if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
+ 
     res.cookie('jwt', token, cookieOptions)
     user.password = undefined;
 
@@ -60,7 +61,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     // errors for existing users with email/name
     // password do not match
 
-    createSendToken(newUser, 201, res);
+    createSendToken(newUser, 201, req, res);
     
 })
 
@@ -81,7 +82,7 @@ exports.login = catchAsync(async (req, res, next) => {
     }
 
     // 3.If everything is ok, send jwt to client via cookie
-    createSendToken(user, 200, res, rememberMe);
+    createSendToken(user, 200, req,  res, rememberMe);
     
 });
 // sending same name cookie with no token to replace to login one
@@ -233,7 +234,7 @@ exports.resetPassword = catchAsync( async (req, res, next) => {
     // through middleware located in userModel
 
     // 4.Log the user in, send JWT
-    createSendToken(user, 200, res);
+    createSendToken(user, 200, req, res);
 });
 
 // loggedIn user changing password
@@ -253,5 +254,5 @@ exports.updatePassword = catchAsync( async (req, res, next) => {
     await user.save()
 
     // 4. Log user in, send JWT.
-    createSendToken(user, 200, res);
+    createSendToken(user, 200, req, res);
 })

@@ -18,6 +18,9 @@ const chatRouter = require('./routes/chatRoute');
 
 const app = express();
 
+// trust proxies for secure connections cookies
+app.enable('trust proxy');
+
 // 1.Global Middleware
 app.use(cors()); 
 

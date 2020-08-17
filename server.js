@@ -36,18 +36,19 @@ nextApp.prepare().then( () => {
 
     // const port = 3000;
     const port = process.env.PORT || 3000;
-    app.listen(port, err => console.log(`> Ready on http://localhost:${port}`));
+    const server = app.listen(port, err => console.log(`> Ready on ${port}...`));
 
     process.on('unhandledRejection', err => {
         console.log('Unhandled Rejection! Shutting down...')
         console.log(err.name, err.message);
         // Gradually closing the server 
         // changed server to app
-        app.close(() => {
+        server.close(() => {
             process.exit(1)
         })
         
     })
+    // for heroku daily server shutdown signal
     process.on('SIGTERM', () => {
         console.log('👋 SIGTERM RECEIVED. Shutting down gracefully');
         server.close(() => {

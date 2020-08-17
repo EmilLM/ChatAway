@@ -30,7 +30,7 @@ const About = (props) => (
 
                         <h2>Documentation</h2>
 
-                        <a className="github" href="https://github.com/EmilLM/ChatApp">Github code</a>
+                        <a className="github" href="https://github.com/EmilLM/ChatAway">Github code</a>
 
                         <p className="stack"><strong>Main stack (MERN): </strong> <em>MongoDB, Express, React, Node</em></p>
                         <p className="stack"><strong>Secondary stack: </strong> <em>Next.js, Material-UI</em></p>
