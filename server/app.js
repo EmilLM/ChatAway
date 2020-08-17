@@ -12,7 +12,7 @@ const compression = require('compression');
 const globalErrorHandler = require('./controllers/errorsController');
 const usersRouter = require('./routes/usersRoute');
 const roomsRouter = require('./routes/roomsRoute');
-const loggedInRouter = require('./routes/loggedInRoute');
+const loggedInRouter = require('./routes/loggedinRoute');
 const messagesRouter = require('./routes/messagesRoute');
 const chatRouter = require('./routes/chatRoute');
 
