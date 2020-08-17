@@ -15,14 +15,15 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from '../server/theme';
 
-axios.defaults.baseURL = 'http://localhost:3000';
+// const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http'
+// const apiUrl = process.browser
+//   ? `${protocol}://${window.location.host}`
+//   : `${protocol}://${req.headers.host}`
+
+axios.defaults.baseURL = 'https://chat-away-app.herokuapp.com';
 
 export default function MyApp({ Component, pageProps }) {
   
-  // const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http'
-  //   const apiUrl = process.browser
-  //     ? `${protocol}://${window.location.host}/api/login.js`
-  //     : `${protocol}://${req.headers.host}/api/login.js`
 
   const [loginStatus, setLoginStatus] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState(null);
