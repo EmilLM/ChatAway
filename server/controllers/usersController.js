@@ -36,7 +36,7 @@ exports.resizeAvatar = (req, res, next) => {
 
     req.file.filename = `user-${req.user.id}-${Date.now()}.jpg`;
     sharp(req.file.buffer)
-        .resize(400, 400)
+        .resize(200, 200)
         .toFormat('jpeg')
         .jpeg({quality: 90})
         .toFile(`public/uploads/userAvatars/${req.file.filename}`)
