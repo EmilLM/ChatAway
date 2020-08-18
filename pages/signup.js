@@ -61,7 +61,7 @@ const SignupPage = () => {
     if (!loggedInUser)  return (
         <>
             <Head>
-                <title>Signup page</title>
+                <title>Signup for ChatAway</title>
             </Head>
            
             <div className="intro">

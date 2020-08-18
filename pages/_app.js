@@ -20,9 +20,13 @@ import theme from '../server/theme';
 //   ? `${protocol}://${window.location.host}`
 //   : `${protocol}://${req.headers.host}`
 
-if (process.env.NODE_ENV !== 'production') axios.defaults.baseURL = 'http://localhost:3000'
+if (process.env.NODE_ENV !== 'production') {
+  axios.defaults.baseURL = 'http://localhost:3000'
+} else {
+  axios.defaults.baseURL = 'https://chat-away-app.herokuapp.com'
+}
 
-axios.defaults.baseURL = 'https://chat-away-app.herokuapp.com';
+
 
 export default function MyApp({ Component, pageProps }) {
   

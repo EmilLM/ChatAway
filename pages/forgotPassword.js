@@ -32,7 +32,7 @@ const  ForgotPassword = () => {
     return (
         <>
             <Head>
-                <title>Forgot password page</title>
+                <title>Forgot password</title>
             </Head>
             <div className="intro">
                 <LockOpenSharp/>

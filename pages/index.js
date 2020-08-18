@@ -13,7 +13,7 @@ const Index = ({loggedInUser}) => {
     return (
       <>
         <Head>
-            <title>Main page of chat app</title>
+            <title>ChatAway</title>
         </Head>
         <div className="intro">
           <img src="/ChatAway.png" alt="ChatAway! Logo"/>

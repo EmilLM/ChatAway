@@ -6,7 +6,7 @@ import Grid from '@material-ui/core/Grid';
 const About = (props) => (
     <>
         <Head>
-            <title>About Chat App</title>
+            <title>About ChatAway</title>
         </Head>
         <Grid container  className="about">
                     <h1>ChatAway</h1>

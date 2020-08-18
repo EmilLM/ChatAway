@@ -57,7 +57,7 @@ const LoginPage = () => {
     if (!loggedInUser) return (
         <>
             <Head>
-                <title>Login page</title>
+                <title>Login to ChatAway</title>
             </Head>
             <div className="intro">
                 <LockIcon/>

@@ -42,7 +42,6 @@ nextApp.prepare().then( () => {
         console.log('Unhandled Rejection! Shutting down...')
         console.log(err.name, err.message);
         // Gradually closing the server 
-        // changed server to app
         server.close(() => {
             process.exit(1)
         })
