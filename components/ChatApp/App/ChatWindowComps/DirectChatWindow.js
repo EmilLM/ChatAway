@@ -10,7 +10,8 @@ const DirectChatWindow = () => {
 
     const {userInChat, leaveChat} = useContext(ChatAppContext);
     const {data, error} = useSWR(`/api/chat/${userInChat._id}`)
-  
+    
+    console.log('Window rendered')
     let orderedMessages;
     if (data) {
         orderedMessages = data.doc.messages.sort(function(a, b) {
@@ -39,9 +40,10 @@ const DirectChatWindow = () => {
                     {orderedMessages?.map((message, index) => {
                         return (
                             <div key={index} id={'el'} ref={el}>
-                                <Message username={message.user}
+                                <Message 
+                                    username={message.user}
                                     text={message.text} 
-                                    messageId={message._id}
+                                   
                                     avatar={message.userAvatar}                        
                                 />
                             </div>
@@ -54,5 +56,5 @@ const DirectChatWindow = () => {
     )
     return <div className="loading"><CircularProgress /></div>
 }
- 
+// DirectChatWindow.whyDidYouRender = true; 
 export default DirectChatWindow;

@@ -9,7 +9,7 @@ import DataError from "@/General/DataError"
 const RoomWindow = () => {
     const {userInRoom, leaveRoom} = useContext(ChatAppContext)
     const {data: messages, error} = useSWR(`/api/rooms/${userInRoom._id}/room-messages`)
-    console.log("swr data:", messages)
+    
 
     let orderedMessages;
     if (messages) {

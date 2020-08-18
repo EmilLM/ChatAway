@@ -9,12 +9,6 @@ import Grid from '@material-ui/core/Grid';
 
 const ChatWindow = ({handleToggle}) => {
     
-    
-    // if (!userInRoom) return (
-    //     <Grid item sm={9} xs={12} id ="chatWindow">
-    //         <IntroWindow/>    
-    //     </Grid>
-    // )
     return ( 
         <Grid item sm={9} xs={12} id ="chatWindow">
             <InfoWindow toggle={handleToggle}/>

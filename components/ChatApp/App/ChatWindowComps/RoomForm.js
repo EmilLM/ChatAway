@@ -2,7 +2,7 @@ import React, {useState, useContext} from "react";
 import UserContext from 'components/General/UserContext';
 import ChatAppContext from 'components/General/ChatAppContext'
 import axios from 'axios';
-import {mutate, trigger} from 'swr'
+import useSWR, {mutate, trigger} from 'swr'
 
 import IconButton from '@material-ui/core/IconButton';
 import SendIcon from '@material-ui/icons/Send';
@@ -47,16 +47,15 @@ export default function RoomForm() {
         }
     }
 
+    const {data} = useSWR(`/api/rooms/${userInRoom._id}/room-messages`)
 
     const handleSubmit= e => {
         e.preventDefault();
+        mutate(`/api/rooms/${userInRoom._id}/room-messages`, {...data, messages: message}, false)
         createMessage();
         addMessageToRoom();
         setMessage('');
-        mutate(`/api/rooms/${userInRoom._id}/room-messages`)
         trigger(`/api/rooms/${userInRoom._id}/room-messages`)
-        console.log('Message submitted', message);
-
     };
 
     return (

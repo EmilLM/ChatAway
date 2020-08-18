@@ -2,7 +2,7 @@ import React, {useState, useContext} from "react";
 import UserContext from 'components/General/UserContext';
 import ChatAppContext from 'components/General/ChatAppContext'
 import axios from 'axios';
-import {mutate, trigger} from 'swr'
+import useSWR, {mutate, trigger} from 'swr'
 
 import IconButton from '@material-ui/core/IconButton';
 import SendIcon from '@material-ui/icons/Send';
@@ -23,7 +23,6 @@ export default function DirectChatForm() {
                 userAvatar: loggedInUser.avatar
             })
             console.log('Created message', res.data)
-            // try set res in state and extract messageId from that and then use it in addMessageToRoom
         } catch (err) {
             console.log(err.response)
         }
@@ -43,15 +42,15 @@ export default function DirectChatForm() {
             console.log(err)
         }
     }
-
+    const {data} = useSWR(`/api/chat/${userInChat._id}`)
 
     const handleSubmit= e => {
         e.preventDefault();
+        mutate(`/api/chat/${userInChat._id}`,{...data, messages: message}, false)
         createMessage();
         addMessageToChat();
-        setMessage('');
-        mutate(`/api/chat/${userInChat._id}`)
         trigger(`/api/chat/${userInChat._id}`)
+        setMessage('');
     };
 
     return (

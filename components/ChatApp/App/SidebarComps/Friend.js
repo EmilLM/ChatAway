@@ -6,7 +6,7 @@ import ChatAppContext from '@/General/ChatAppContext'
 import axios from 'axios';
 import {mutate, trigger} from 'swr';
 
-const Friend = ({status, user}) => {
+const Friend = React.memo(({status, user}) => {
     const [hover, setHover] = useState(false);
     const {loggedInUser} = useContext(UserContext);
     const {friendChat, addUserToChat} = useContext(ChatAppContext);
@@ -38,6 +38,7 @@ const Friend = ({status, user}) => {
             {user.username}
             {hover && 
             <IconButton className={"closeChat"} onClick={() => {
+                
                 removeFriend(user._id)
                 mutate('/api/users/me');
                 trigger('/api/users/me');
@@ -48,6 +49,6 @@ const Friend = ({status, user}) => {
         </li>
          
     );
-}
+})
  
 export default Friend;

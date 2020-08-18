@@ -1,8 +1,8 @@
-import React, {useEffect, useContext} from "react";
+import React from "react";
 import Avatar from '@material-ui/core/Avatar';
 
 
-export default function Message({username, text, avatar}) {
+ const Message = React.memo(({username, text, avatar}) => {
 
 
     return (
@@ -15,4 +15,6 @@ export default function Message({username, text, avatar}) {
         </div>
 
     )
-}
+})
+
+export default Message;

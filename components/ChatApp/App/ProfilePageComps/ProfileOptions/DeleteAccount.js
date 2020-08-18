@@ -12,7 +12,7 @@ const DeleteAccount = ({data}) => {
         console.log(res.data);
         mutate('api/users/me');
         trigger('api/users/me')
-        Router.push('/index')
+        Router.replace('/index')
     }
 
     // useEffect( () => {

@@ -24,7 +24,7 @@ const ProfileDetails = ({data}) => {
         e.preventDefault();
         const formData = new FormData();
         formData.append('avatar', file);
-
+        mutate('api/users/me');
         try {
             const res = await axios.patch(`/api/users/updateMe`, formData, {
                 headers: { 'Content-Type': 'multipart/form-data'}
@@ -34,7 +34,7 @@ const ProfileDetails = ({data}) => {
         } catch (err) {
             console.log(err.response)
         }
-        mutate('api/users/me');
+        
         trigger('api/users/me');
         setFile(null);
         setFilename("Change avatar image");
