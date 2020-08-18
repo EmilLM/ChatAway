@@ -43,7 +43,7 @@ const usersSchema =  new mongoose.Schema({
 
     avatar: {
         type: String,
-        default: 'default.jpg'
+        default: 'emil.jpg'
     },
     privileges: {
         type: String,
