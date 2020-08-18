@@ -9,7 +9,7 @@ import Router from "next/router";
 import Head from 'next/head';
 import DataError from "@/General/DataError"
 
-const ChatAway = ({loginStatus, roomsData, loggedInUser}) => {
+const ChatAway = React.memo(({loginStatus, roomsData, loggedInUser}) => {
     
     const {data: rooms, error: roomsError} = useSWR('/api/rooms', {initialData: roomsData});
     const {data: user , error: userError} = useSWR('/api/users/me');
@@ -211,7 +211,7 @@ const ChatAway = ({loginStatus, roomsData, loggedInUser}) => {
         </>
     
     );
-}
+})
 
 export default ChatAway;
 

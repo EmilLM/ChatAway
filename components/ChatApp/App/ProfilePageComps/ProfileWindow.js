@@ -9,8 +9,7 @@ import DataError from "@/General/DataError"
 
 const ProfileWindow = (props) => {
 
-    const {handleToggle, edit, changePass, activity, 
-            deleteUser, data, error} = props;
+    const {handleToggle, data, error} = props;
 
 
     if (error) return <DataError/>  

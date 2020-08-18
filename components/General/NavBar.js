@@ -4,7 +4,7 @@ import UserContext from "./UserContext";
 import Button from '@material-ui/core/Button';
 
 
-export default function NavBar() {
+const NavBar = () => {
     
     const {loggedInUser} = useContext(UserContext);
     
@@ -26,4 +26,6 @@ export default function NavBar() {
             </ul>
         </nav>
     )
-}
+};
+
+export default NavBar;

@@ -3,13 +3,14 @@ import Layout from "../components/General/Layout";
 import Head from "next/head";
 import Grid from '@material-ui/core/Grid';
 
-const About = (props) => (
+const About = () => (
     <>
         <Head>
             <title>About ChatAway</title>
         </Head>
         <Grid container  className="about">
                     <h1>ChatAway</h1>
+                    <p>Create an account or use mail: user123@gmail.com/ password: password</p>
                     <div className="aboutDescription">
                         <h2>Description</h2>
                         <p>A work in progress but functional chat app similar to Slack, having both room and direct chat.</p>

@@ -51,12 +51,6 @@ export default function MyApp({ Component, pageProps }) {
     }  
   }
   // const {data: loggedInUser, error } = useSWR('/api/users/me')
-
-  // useSWR in _app.js needs to have its fetcher because this line is read first, b4 the SWRConfig with the fetcher
-  //  const {data: onlineUser, error} = useSWR('/loggedIn', (...args) => axios(...args).then(res => res.data )) 
-  // console.log('Logged in as:', onlineUser)
-
-
   
   // method to lift up state from login
   const handleAuth = (data) => {
@@ -86,18 +80,18 @@ export default function MyApp({ Component, pageProps }) {
   useEffect( () => {
     checkLoginStatus();
     if (loginStatus === "logged-out") {
-      Router.push('/index');
+      Router.replace('/index');
     }
   }, [loggedInUser])
   
-  const memoizedValue = useMemo( () => ({
-    loggedInUser,
-    handleLogout,
-    handleAuth
-  }), [loggedInUser, handleLogout, handleAuth])
+  // const memoizedValue = useMemo( () => ({
+  //   loggedInUser,
+  //   handleLogout,
+  //   handleAuth
+  // }), [loggedInUser, handleLogout, handleAuth])
   
    return (
-    <UserContext.Provider value={memoizedValue}>
+    <UserContext.Provider value={{loggedInUser, handleLogout, handleAuth}}>
       <ThemeProvider theme={theme}>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
