@@ -38,7 +38,6 @@ const Friend = React.memo(({status, user}) => {
             {user.username}
             {hover && 
             <IconButton className={"closeChat"} onClick={() => {
-                
                 removeFriend(user._id)
                 mutate('/api/users/me');
                 trigger('/api/users/me');
