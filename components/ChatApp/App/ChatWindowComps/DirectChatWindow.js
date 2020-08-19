@@ -37,13 +37,12 @@ const DirectChatWindow = () => {
         <>
             <div className="joinRoom">
                 <div className="messageList">
-                    {orderedMessages?.map((message, index) => {
+                    {orderedMessages?.map(message => {
                         return (
-                            <div key={index} id={'el'} ref={el}>
+                            <div key={message._id} id={'el'} ref={el}>
                                 <Message 
                                     username={message.user}
                                     text={message.text} 
-                                   
                                     avatar={message.userAvatar}                        
                                 />
                             </div>

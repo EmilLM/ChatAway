@@ -26,9 +26,9 @@ if (process.env.NODE_ENV !== 'production') {
   axios.defaults.baseURL = 'https://chat-away-app.herokuapp.com'
 }
 // why-did-you-render setting
-if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
-  whyDidYouRender(React)
-}
+// if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
+//   whyDidYouRender(React)
+// }
 
 export default function MyApp({ Component, pageProps }) {
   
