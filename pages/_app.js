@@ -8,7 +8,7 @@ import Router from 'next/router';
 import axios from 'axios';
 import useSWR, {SWRConfig} from 'swr';
 
-import whyDidYouRender from '@welldone-software/why-did-you-render'
+// import whyDidYouRender from '@welldone-software/why-did-you-render'
 // Material UI integration imports
 import PropTypes from 'prop-types';
 import { ThemeProvider } from '@material-ui/core/styles';
