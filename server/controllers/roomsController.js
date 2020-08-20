@@ -53,4 +53,5 @@ exports.getRoomMessages = catchAsync ( async (req, res, next) => {
 // 
 exports.joinRoom  = factory.addToModel(Room);
 exports.leaveRoom  = factory.removeFromModel(Room);
-exports.addMessageToRoom  = factory.addToModel(Room)
+exports.addMessageToRoom  = factory.addToModel(Room);
+exports.removeMessageFroMRoom = factory.removeFromModel(Room);

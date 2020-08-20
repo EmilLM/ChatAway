@@ -15,10 +15,6 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from '../server/theme';
 
-// const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http'
-// const apiUrl = process.browser
-//   ? `${protocol}://${window.location.host}`
-//   : `${protocol}://${req.headers.host}`
 
 if (process.env.NODE_ENV !== 'production') {
   axios.defaults.baseURL = 'http://localhost:3000'

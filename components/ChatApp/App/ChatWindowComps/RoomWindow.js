@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useContext} from "react";
-import Message from './Message'
+import RoomMessage from './RoomMessage'
 import useSWR from 'swr'
 import RoomForm from "./RoomForm";
 import {CircularProgress} from '@material-ui/core';
@@ -32,6 +32,7 @@ const RoomWindow = () => {
     useEffect(()=> {
         return () => leaveRoom(userInRoom._id)
     }, []);
+    let lastSender = undefined;
 
     if (error) return <DataError/>
     if (orderedMessages) return (  
@@ -39,13 +40,17 @@ const RoomWindow = () => {
             <div className="joinRoom">
                 <div className="messageList">
                 <div className="roomDescription">{userInRoom.description}</div>
-                    {orderedMessages?.map((message, index) => {
+                    {orderedMessages?.map(message => {
+                        const showName = !lastSender || message.user !== lastSender; 
+                        lastSender = message.user
                         return (
-                            <div key={index} id={'el'} ref={el}>
-                                <Message username={message.user}
+                            <div key={message._id} id={'el'} ref={el}>
+                                <RoomMessage 
+                                    showName={showName}
+                                    username={message.user}
                                     text={message.text} 
-                                    messageId={message._id}
-                                    avatar={message.userAvatar}                        
+                                    avatar={message.userAvatar}
+                                    messageId={message._id}                        
                                 />
                             </div>
                         )

@@ -16,7 +16,10 @@ const messageSchema = new mongoose.Schema ({
     userAvatar: String,
     delivered : Boolean,
     read : Boolean,
-    timestamps: Date
+    createdAt: {
+        type: Date,
+        default: Date.now()
+    }
 })
 
 messageSchema.pre(/^find/, function(next) {

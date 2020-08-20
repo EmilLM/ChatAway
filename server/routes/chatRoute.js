@@ -22,6 +22,8 @@ router
     .delete(deleteChat)
 
 router.patch('/:id/addMessage', addToChat);
+router.patch('/:id/removeMessage', removeFromChat)
+
 router.patch('/:id/addUser', addToChat);
 router.patch('/:id/removeUser/', removeFromChat);
 

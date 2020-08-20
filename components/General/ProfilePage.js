@@ -17,7 +17,7 @@ const Profile = ({children}) => {
 
     
     return (
-        <Grid container style={{ border: '1px solid navy'}}>
+        <Grid container style={{ border: '2px solid navy'}}>
             <SidebarProfile  handleToggle={handleToggle} toggleBar={toggleBar} />
             <ProfileWindow 
                 handleToggle={handleToggle}

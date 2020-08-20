@@ -15,13 +15,8 @@ const roomsSchema = new mongoose.Schema ({
         ref: 'User'
     }],
     messages: [{
-        text: String,
-        user: String,
-        userAvatar: String,
-        createdAt: {
-            type: Date,
-            default: Date.now()
-        }
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Message'
     }],
     description: {
         type: String,
@@ -44,7 +39,7 @@ roomsSchema.pre(/^find/, function(next) {
         path: 'users',
         select: '-__v -passwordChangedAt'
     });
-    // this.populate({path: 'messages'})
+    this.populate({path: 'messages'})
     next();
 })
 const Room = mongoose.model('Room', roomsSchema);

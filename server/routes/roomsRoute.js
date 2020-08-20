@@ -4,7 +4,7 @@ const authController = require('../controllers/authController');
 
 
 const {getAllRooms, createRoom, getRoom, updateRoom, 
-    deleteRoom, joinRoom, leaveRoom, addMessageToRoom} = roomsController;
+    deleteRoom, joinRoom, leaveRoom, addMessageToRoom, removeMessageFroMRoom} = roomsController;
     
 // route: /api/rooms/
 const router = express.Router();
@@ -39,7 +39,9 @@ router
     
 router.patch('/:id/join', joinRoom)
 router.patch('/:id/leave', leaveRoom)
-router.patch('/:id/messages', addMessageToRoom)    
+
+router.patch('/:id/addMessage', addMessageToRoom)
+router.patch('/:id/removeMessage', removeMessageFroMRoom)    
 
 
 module.exports = router;

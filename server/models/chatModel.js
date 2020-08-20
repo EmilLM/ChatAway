@@ -2,13 +2,8 @@ const mongoose = require('mongoose');
 
 const chatSchema = new mongoose.Schema({
     messages: [{
-        text: String,
-        user: String,
-        userAvatar: String,
-        createdAt: {
-            type: Date,
-            default: Date.now()
-        }
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Message'
     }],
     participants: Array,
     activeUsers: [{
@@ -24,7 +19,7 @@ chatSchema.pre(/^find/, function(next) {
         path: 'activeUsers',
         select: '-chats'
     })
-    // this.populate({path: 'messages'});
+    this.populate({path: 'messages'});
     // this.populate({path: 'participants'});
     next();
 })

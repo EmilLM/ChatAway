@@ -23,32 +23,28 @@ export default function DirectChatForm() {
                 userAvatar: loggedInUser.avatar
             })
             console.log('Created message', res.data)
+            // add message to chat
+            try {
+                const resp = await axios.patch(`/api/chat/${userInChat._id}/addMessage`, {
+                    messages: res.data.doc._id     
+                })
+                console.log('Message added to chat', resp.data)
+            } catch (error) {
+                console.log(error);
+            }
+
         } catch (err) {
             console.log(err.response)
         }
     }
-
-    const addMessageToChat= async () => {
-        try {
-            const res = await axios.patch(`/api/chat/${userInChat._id}/addMessage`, {
-                messages: {
-                    text: message,
-                    user: loggedInUser.username,
-                    userAvatar: loggedInUser.avatar
-                }
-            })
-            console.log('Message added to chat', res.data)
-        } catch (err) {
-            console.log(err)
-        }
-    }
+ 
     const {data} = useSWR(`/api/chat/${userInChat._id}`)
 
     const handleSubmit= e => {
         e.preventDefault();
-        mutate(`/api/chat/${userInChat._id}`,{...data, messages: message}, false)
+        // ,{...data, messages: message}, false
+        mutate(`/api/chat/${userInChat._id}`)
         createMessage();
-        addMessageToChat();
         trigger(`/api/chat/${userInChat._id}`)
         setMessage('');
     };

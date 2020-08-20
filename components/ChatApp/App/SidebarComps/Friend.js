@@ -28,23 +28,23 @@ const Friend = React.memo(({status, user}) => {
 
     
     return ( 
-        <li className={"user " + status}
+        <li 
+            className={"user " + status}
             onMouseEnter={ ()=>setHover(true)} 
             onMouseLeave={ ()=>setHover(false)}
             onMouseDown={ e=> e.preventDefault()}
-            // create and and add chat if none exists or just open it if there is chat history with this user
             onDoubleClick={()=>friendChat(user.username, user._id)}
-        >
-            {user.username}
-            {hover && 
-            <IconButton className={"closeChat"} onClick={() => {
-                removeFriend(user._id)
-                mutate('/api/users/me');
-                trigger('/api/users/me');
-            }} >
-                <CloseIcon />
-            </IconButton>
-        }  
+        >{user.username}
+            {
+                hover && 
+                <IconButton className={"closeChat"} onClick={() => {
+                    removeFriend(user._id)
+                    mutate('/api/users/me');
+                    trigger('/api/users/me');
+                }} >
+                    <CloseIcon />
+                </IconButton>
+            }     
         </li>
          
     );

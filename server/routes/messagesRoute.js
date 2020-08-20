@@ -13,9 +13,12 @@ router
     .route('/')
     .get(getAllMessages)
     .post(createMessage)
+    
+
+router
+    .route('/:id')
     .patch(updateMessage)
     .delete(deleteMessage)
-
-
+    
 
 module.exports = router;

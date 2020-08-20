@@ -26,34 +26,27 @@ export default function RoomForm() {
                 userAvatar: loggedInUser.avatar
             })
             console.log('Created message', res.data)
-            // try set res in state and extract messageId from that and then use it in addMessageToRoom
+            // add message to room
+            try {
+                const resp = await axios.patch(`/api/rooms/${userInRoom._id}/addMessage`, {
+                    messages: res.data.doc._id
+                })
+                console.log('Message pushed to room', resp.data)
+            } catch (error) {
+                console.log(error)
+            }
+
         } catch (err) {
             console.log(err.response)
         }
     }
-
-    const addMessageToRoom = async () => {
-        try {
-            const res = await axios.patch(`/api/rooms/${userInRoom._id}/messages`, {
-                messages: {
-                    text: message,
-                    user: loggedInUser.username,
-                    userAvatar: loggedInUser.avatar
-                }
-            })
-            console.log('Message pushed to room', res.data)
-        } catch (err) {
-            console.log(err)
-        }
-    }
-
-    const {data} = useSWR(`/api/rooms/${userInRoom._id}/room-messages`)
+    // const {data} = useSWR(`/api/rooms/${userInRoom._id}/room-messages`)
 
     const handleSubmit= e => {
         e.preventDefault();
-        mutate(`/api/rooms/${userInRoom._id}/room-messages`, {...data, messages: message}, false)
+        // , {...data, messages: message}, false
+        mutate(`/api/rooms/${userInRoom._id}/room-messages`)
         createMessage();
-        addMessageToRoom();
         setMessage('');
         trigger(`/api/rooms/${userInRoom._id}/room-messages`)
     };

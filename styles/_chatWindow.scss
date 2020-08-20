@@ -90,6 +90,8 @@
     align-items: center;
     margin-bottom: 20px;
     margin-left: -15px;
+    font-weight: 700; 
+    font-size: 20px;
     .MuiAvatar-root {
       width: 25px;
       height: 25px;
@@ -100,12 +102,49 @@
     background: cornflowerblue;
     padding: 5px 10px;
     color: white;
+    border-radius: .4em;
+    position: relative;
   }
+  #bubble {
+    background: gray;
+    position: relative;
+    &:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      border: 16px solid transparent;
+      border-bottom-color:gray;
+      border-top: 0;
+      border-left: 0;
+      // margin-left: -12px;
+      margin-top: -12px;
+    }
+  }
+  .messageOptions {
+    position: absolute;
+    top:-15px;
+    right: -25px;
+    color: gray;
+    // border: 1px solid black;
+    background: lightblue;
+    border-radius: 5px;
+    .MuiSvgIcon-root {
+      height: 0.7em;
+      width: 0.7em;
+      padding-bottom: 2px;
+      &:hover {
+        color: black;
+      }
+    }
+  }
+
   .speech-bubble {
     position: relative;
-    border-radius: .4em;
   }
-  
+
   .speech-bubble:after {
     content: '';
     position: absolute;
@@ -120,7 +159,6 @@
     // margin-left: -12px;
     margin-top: -12px;
   }
-
-  
 }
+
 
