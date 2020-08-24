@@ -15,24 +15,28 @@ const DirectChat = ({chat, status}) => {
 
   
     return (
-        <li className={"directChat " + status} 
-        onMouseEnter={ ()=>setHover(true)} 
-        onMouseLeave={ ()=>setHover(false)}
-        onMouseDown={ e=> e.preventDefault()}
-        onDoubleClick={()=>addUserToChat(chat._id)}
+        <ul 
+            onMouseEnter={ ()=>setHover(true)} 
+            onMouseLeave={ ()=>setHover(false)}
         >
-            {chat?.participants.filter( (name) =>  name !== loggedInUser?.username)}
+            <li 
+                className={"directChat " + status} 
+                onMouseDown={ e=> e.preventDefault()}
+                onClick={()=>addUserToChat(chat._id)}
+            >
+                {chat?.participants.filter( (name) =>  name !== loggedInUser?.username)}
+            </li>
             {hover && 
-            <IconButton className={"closeChat"} onClick={() => {
-                removeChat(chat._id);
-                mutate('/api/users/me');
-                trigger('/api/users/me');
-            }} >
+            <IconButton 
+                className={"closeChat"} 
+                onClick={() => {
+                    removeChat(chat._id);
+                    mutate('/api/users/me');
+                    trigger('/api/users/me');
+                }} >
                 <CloseIcon />
-            </IconButton>
-            }
-                        
-        </li>
+            </IconButton>}
+        </ul>
       );
 }
  

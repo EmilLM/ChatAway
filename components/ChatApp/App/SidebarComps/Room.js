@@ -10,15 +10,20 @@ const RoomsList = ({room, active}) => {
     const [hover, setHover] = useState(false);
     
     return ( 
-        <li  className={"room " + active}
+        <ul className={active}
             onMouseEnter={()=>setHover(true)} 
-            onMouseLeave={()=>setHover(false)} 
-            onDoubleClick={()=>joinRoom(room._id, loggedInUser._id)} 
-            onMouseDown={e=>e.preventDefault()}
+            onMouseLeave={()=>setHover(false)}
         >
-            # {room.name}
+            <li  
+                className={"room"} 
+                onClick={()=>joinRoom(room._id, loggedInUser._id)} 
+                onMouseDown={e=>e.preventDefault()}
+            >
+                 # {room.name}   
+            </li>
             {hover &&<RoomOptions room={room}/>}
-        </li>
+        </ul>
+        
     );
 }
  

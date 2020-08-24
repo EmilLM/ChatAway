@@ -66,23 +66,23 @@ export default function RoomOptions({room}) {
 
   return (
     <>
-        <IconButton
-            aria-controls="customized-menu"
-            aria-haspopup="true"
-            variant="contained"
-            color="primary"
-            onClick={handleClick}
-            className="roomOptions"
-        >
-            <MoreVertIcon />
-        </IconButton>
-        <StyledMenu
-            id="customized-menu"
-            anchorEl={anchorEl}
-            keepMounted
-            open={Boolean(anchorEl)}
-            onClose={handleClose}     
-        >
+      <IconButton
+          aria-controls="customized-menu"
+          aria-haspopup="true"
+          variant="contained"
+          color="primary"
+          onClick={handleClick}
+          className="roomOptions"
+      >
+          <MoreVertIcon />
+      </IconButton>
+      <StyledMenu
+          id="customized-menu"
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}     
+      >
         <StyledMenuItem onClick={ () => leaveRoom(room._id)} >
             <ListItemIcon onClick={handleClose}>
             <ExitToAppIcon fontSize="small" />
@@ -94,14 +94,14 @@ export default function RoomOptions({room}) {
             <SettingsIcon fontSize="small" />
             </ListItemIcon>
             <ListItemText primary="Edit" />
-        </StyledMenuItem>
+        </StyledMenuItem> 
         <StyledMenuItem onClick={handleDelete}>
             <ListItemIcon>
             <DeleteForeverIcon fontSize="small" />
             </ListItemIcon>
             <ListItemText primary="Delete" />
         </StyledMenuItem>
-        </StyledMenu>
+      </StyledMenu>
     </>
   );
 }
