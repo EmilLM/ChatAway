@@ -11,14 +11,14 @@ const DirectChatWindow = () => {
 
     const {loggedInUser} = useContext(UserContext)
     const {userInChat, leaveChat} = useContext(ChatAppContext);
-    const {data, error} = useSWR(`/api/chat/${userInChat._id}`)
+    const {data, error} = useSWR(`/api/chat/${userInChat._id}/chat-messages`)
     
     console.log('chat messages', data)
-    const orderedMessages = data?.doc.messages.sort(function(a, b) {
-        a = new Date(a.createdAt);
-        b = new Date(b.createdAt);
-        return a<b ? -1 : a>b ? 1 : 0;
-    });
+    // const data = data?.doc.messages.sort(function(a, b) {
+    //     a = new Date(a.createdAt);
+    //     b = new Date(b.createdAt);
+    //     return a<b ? -1 : a>b ? 1 : 0;
+    // });
     
     const el = useRef(null);
     useEffect(()=> {
@@ -31,15 +31,16 @@ const DirectChatWindow = () => {
         return () => leaveChat(userInChat._id)
     }, [userInChat])
 
-    
+    // to avoid username display on every message in a group from the same user
     let lastSender = undefined;
 
     if (error) return <DataError/>
-    if (orderedMessages) return (  
+    if (data) return (  
         <>
             <div className="joinRoom">
                 <div className="messageList">
-                    {orderedMessages?.map(message => {
+                    {data?.chatMessages.map(message => {
+                        // to avoid username display on every message in a group from the same user + different color bubble
                         const showName = !lastSender || message.user !== lastSender; 
                         lastSender = message.user
                         const otherUserMessage = message.user !== loggedInUser?.username;
@@ -58,7 +59,7 @@ const DirectChatWindow = () => {
                     })}
                 </div>
             </div>
-            <DirectChatForm />  
+            <DirectChatForm  data={data}/>  
         </>
     )
     return <div className="loading"><CircularProgress /></div>

@@ -27,5 +27,9 @@ router.patch('/:id/removeMessage', removeFromChat)
 router.patch('/:id/addUser', addToChat);
 router.patch('/:id/removeUser/', removeFromChat);
 
+router
+    .route('/:chatId/chat-messages')
+    .get(authController.protect, chatController.getChatMessages)
+
 router.get('/:name/findChat', friendChat)
 module.exports = router;

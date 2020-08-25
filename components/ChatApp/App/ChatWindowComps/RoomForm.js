@@ -2,12 +2,12 @@ import React, {useState, useContext} from "react";
 import UserContext from 'components/General/UserContext';
 import ChatAppContext from 'components/General/ChatAppContext'
 import axios from 'axios';
-import useSWR, {mutate, trigger} from 'swr'
+import {mutate} from 'swr'
 
 import IconButton from '@material-ui/core/IconButton';
 import SendIcon from '@material-ui/icons/Send';
 
-export default function RoomForm() {
+export default function RoomForm({data}) {
 
     const {userInRoom} = useContext(ChatAppContext);
     const {loggedInUser} = useContext(UserContext);
@@ -31,6 +31,7 @@ export default function RoomForm() {
                 const resp = await axios.patch(`/api/rooms/${userInRoom._id}/addMessage`, {
                     messages: res.data.doc._id
                 })
+
                 console.log('Message pushed to room', resp.data)
             } catch (error) {
                 console.log(error)
@@ -40,15 +41,22 @@ export default function RoomForm() {
             console.log(err.response)
         }
     }
-    // const {data} = useSWR(`/api/rooms/${userInRoom._id}/room-messages`)
+   
+    const optimisticMessage = {
+        _id: Math.random(),
+        text: message,
+        user: loggedInUser.username, 
+        userAvatar: loggedInUser.avatar
+    }
+    const {roomMessages} = data;
 
     const handleSubmit= e => {
         e.preventDefault();
-        // , {...data, messages: message}, false
-        mutate(`/api/rooms/${userInRoom._id}/room-messages`)
+        // 
+        mutate(`/api/rooms/${userInRoom._id}/room-messages`,{...data, roomMessages: [...roomMessages,  optimisticMessage]}, false)
         createMessage();
         setMessage('');
-        trigger(`/api/rooms/${userInRoom._id}/room-messages`)
+        mutate(`/api/rooms/${userInRoom._id}/room-messages`)
     };
 
     return (

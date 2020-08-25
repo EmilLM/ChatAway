@@ -30,8 +30,8 @@ import {mutate, trigger} from 'swr'
                 console.log('Remove message from chat error', err)
             }
         }
-        deleteMessage();
         mutate(`/api/rooms/${userInRoom._id}/room-messages`)
+        deleteMessage();
         trigger(`/api/rooms/${userInRoom._id}/room-messages`)   
     }
     

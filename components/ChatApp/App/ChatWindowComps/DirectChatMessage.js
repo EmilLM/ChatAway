@@ -31,8 +31,8 @@ import {mutate, trigger} from 'swr'
             }
         }
         deleteMessage();
-        mutate(`/api/chat/${userInChat._id}`)
-        trigger(`/api/chat/${userInChat._id}`)         
+        mutate(`/api/chat/${userInChat._id}/chat-messages`)
+        trigger(`/api/chat/${userInChat._id}/chat-messages`)         
     }
     
 
@@ -48,6 +48,7 @@ import {mutate, trigger} from 'swr'
                     {username}
                 </div>}
                 <div 
+                //  to avoid username display on every message in a group from the same user + different color bubble
                     className={showName ? 'text speech-bubble': 'text'}
                     style={{background: otherUserMessage? 'gray': 'cornflowerblue'}}
                     id={otherUserMessage && showName? 'bubble': ''}

@@ -25,3 +25,14 @@ exports.friendChat = catchAsync( async (req, res, next) => {
         chat
     })
 })
+
+exports.getChatMessages = catchAsync ( async (req, res, next) => {
+    const chat = await Chat.findById(req.params.chatId);
+    const chatMessages = chat.messages
+    if (!req.params.chatId) {
+        return next(new AppError('No Chat found with that id', 404));
+    }
+    res.json({
+        chatMessages
+    })
+})

@@ -2,12 +2,12 @@ import React, {useState, useContext} from "react";
 import UserContext from 'components/General/UserContext';
 import ChatAppContext from 'components/General/ChatAppContext'
 import axios from 'axios';
-import useSWR, {mutate, trigger} from 'swr'
+import {mutate} from 'swr'
 
 import IconButton from '@material-ui/core/IconButton';
 import SendIcon from '@material-ui/icons/Send';
 
-export default function DirectChatForm() {
+export default function DirectChatForm({data}) {
 
     const {userInChat} = useContext(ChatAppContext);
     const {loggedInUser} = useContext(UserContext);
@@ -37,16 +37,20 @@ export default function DirectChatForm() {
             console.log(err.response)
         }
     }
- 
-    const {data} = useSWR(`/api/chat/${userInChat._id}`)
+    const optimisticMessage = {
+        _id: Math.random(),
+        text: message,
+        user: loggedInUser.username, 
+        userAvatar: loggedInUser.avatar
+    }
+    const {chatMessages} = data;
 
     const handleSubmit= e => {
         e.preventDefault();
-        // ,{...data, messages: message}, false
-        mutate(`/api/chat/${userInChat._id}`)
+        mutate(`/api/chat/${userInChat._id}/chat-messages`,{...data, chatMessages: [...chatMessages,  optimisticMessage]}, false)
         createMessage();
-        trigger(`/api/chat/${userInChat._id}`)
         setMessage('');
+        mutate(`/api/chat/${userInChat._id}/chat-messages`)
     };
 
     return (

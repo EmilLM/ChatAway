@@ -45,7 +45,6 @@ exports.getRoomMessages = catchAsync ( async (req, res, next) => {
         return next(new AppError('No Room found with that id', 404));
     }
     res.json({
-        status: "Room messages:",
         roomMessages
     })
 })
