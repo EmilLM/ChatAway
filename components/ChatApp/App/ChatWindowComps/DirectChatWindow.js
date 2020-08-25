@@ -52,7 +52,8 @@ const DirectChatWindow = () => {
                                     username={message.user}
                                     text={message.text} 
                                     avatar={message.userAvatar} 
-                                    messageId={message._id}                       
+                                    messageId={message._id}
+                                    data={data}                       
                                 />
                             </div>
                         )        

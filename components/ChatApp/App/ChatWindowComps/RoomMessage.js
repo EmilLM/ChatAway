@@ -10,7 +10,7 @@ import {mutate, trigger} from 'swr'
  const DirectChatMessage = React.memo((props) => {
     
     const {userInRoom} = useContext(ChatAppContext);
-    const {showName, username, text, avatar, messageId} = props;
+    const {showName, username, text, avatar, messageId, data} = props;
     const [hover, setHover] = useState(false);
     
     const handleDelete = () => {
@@ -30,7 +30,9 @@ import {mutate, trigger} from 'swr'
                 console.log('Remove message from chat error', err)
             }
         }
-        mutate(`/api/rooms/${userInRoom._id}/room-messages`)
+        const {roomMessages} = data;
+        const remainingMessages= roomMessages.filter( el => el._id !== messageId)
+        mutate(`/api/rooms/${userInRoom._id}/room-messages`, {roomMessages: remainingMessages}, false)
         deleteMessage();
         trigger(`/api/rooms/${userInRoom._id}/room-messages`)   
     }

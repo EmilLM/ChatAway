@@ -10,7 +10,7 @@ import {mutate, trigger} from 'swr'
  const DirectChatMessage = React.memo((props) => {
    
     const {userInChat} = useContext(ChatAppContext);
-    const {otherUserMessage, showName, username, text, avatar, messageId} = props;
+    const {otherUserMessage, showName, username, text, avatar, messageId, data} = props;
     const [hover, setHover] = useState(false);
     
     const handleDelete = () => {
@@ -30,18 +30,20 @@ import {mutate, trigger} from 'swr'
                 console.log('Remove message from chat error', err)
             }
         }
+        const {chatMessages} = data;
+        const remainingMessages= chatMessages.filter( el => el._id !== messageId)
+        mutate(`/api/chat/${userInChat._id}/chat-messages`, {chatMessages:remainingMessages}, false)
         deleteMessage();
-        mutate(`/api/chat/${userInChat._id}/chat-messages`)
-        trigger(`/api/chat/${userInChat._id}/chat-messages`)         
+        mutate(`/api/chat/${userInChat._id}/chat-messages`)         
     }
     
 
     return (
         <>
             <div 
-            className="message" 
-            onMouseEnter={ ()=>setHover(true)} 
-            onMouseLeave={ ()=>setHover(false)}
+                className="message" 
+                onMouseEnter={ ()=>setHover(true)} 
+                onMouseLeave={ ()=>setHover(false)}
             >
                 {showName && <div className="sender">
                     <span><Avatar src={`/uploads/userAvatars/${avatar}`} alt="user-avatar"  /></span>
