@@ -8,7 +8,7 @@ import {mutate, trigger} from 'swr';
 
 const DirectChat = ({chat, status}) => {
 
-    const {removeChat, addUserToChat} = useContext(ChatAppContext);
+    const {removeChat, joinChat} = useContext(ChatAppContext);
     const {loggedInUser} = useContext(UserContext);
 
     const [hover, setHover] = useState(false);
@@ -22,7 +22,7 @@ const DirectChat = ({chat, status}) => {
             <li 
                 className={"directChat " + status} 
                 onMouseDown={ e=> e.preventDefault()}
-                onClick={()=>addUserToChat(chat._id)}
+                onClick={()=>joinChat(chat._id)}
             >
                 {chat?.participants.filter( (name) =>  name !== loggedInUser?.username)}
             </li>

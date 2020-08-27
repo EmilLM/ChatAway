@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faChevronDown, faPlus} from "@fortawesome/free-solid-svg-icons";
 import Modal from "components/General/Modal";
-import CreateChat from "../SidebarComps/CreateChat"
+import SearchAdd from "./SearchAdd"
 import DirectChat from "./DirectChat"
 import useSWR from 'swr';
 
@@ -29,7 +29,7 @@ const DirectChatTab = () => {
         </div>
 
         <Modal toggle={handleModal} modal={toggleModal} title={"Direct chat"}>
-            <CreateChat/>
+            <SearchAdd/>
         </Modal>
         
         { toggleTab &&

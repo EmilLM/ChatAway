@@ -9,11 +9,11 @@ import Avatar from '@material-ui/core/Avatar';
 import useSWR, { mutate, trigger } from 'swr';
 import axios from 'axios'
 
-const CreateChat = () => {
+const SearchAdd = () => {
     // const {data, error} = useSWR(`/api/users/?username=${values.username}`);
 
     const {loggedInUser} = useContext(UserContext);
-    const {createAndAddChat} = useContext(ChatAppContext)
+    const {startChat} = useContext(ChatAppContext)
     
     const [isLoading, setIsLoading] = useState(false);
     const [search, setSearch] = useState(null);
@@ -33,23 +33,14 @@ const CreateChat = () => {
     }
   
     const addFriend = async  (userId) => {
-        // add friend to logged in user
+        
         try {
-            const res = await axios.patch(`/api/users/${loggedInUser._id}/addFriend`,{
-                friends: userId
-                
-            })
-            console.log('Friend added', res.data)
+            // add friend to logged in user
+            await axios.patch(`/api/users/${loggedInUser._id}/addFriend`,{friends: userId})
+            // add logged in user as friend to the searched user
+            await axios.patch(`/api/users/${userId}/addFriend`, {friends: loggedInUser._id})
         } catch(err) {
             console.log(err.response);
-        }
-        // add logged in user as friend to the searched user
-        try {
-            const response = await axios.patch(`/api/users/${userId}/addFriend`, {
-                friends: loggedInUser._id
-                })
-        } catch (error) {
-            console.log(error)
         }
         mutate('/api/users/me')
         trigger('/api/users/me')
@@ -86,7 +77,7 @@ const CreateChat = () => {
                                         <div>{user.username}</div>
                                     </div>
                                     <div>
-                                        <Button onClick={ () => createAndAddChat(user.username, user._id)}>Chat</Button>
+                                        <Button onClick={ () => startChat(user.username, user._id)}>Chat</Button>
                                         <Button onClick={ () => addFriend(user._id)}>Add friend</Button>
                                     </div>
                                 </li>
@@ -99,4 +90,4 @@ const CreateChat = () => {
      );
 }
  
-export default CreateChat;
+export default SearchAdd;

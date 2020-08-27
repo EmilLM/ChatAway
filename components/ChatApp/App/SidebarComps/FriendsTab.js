@@ -3,7 +3,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faChevronDown, faPlus} from "@fortawesome/free-solid-svg-icons";
 
 import Modal from "components/General/Modal";
-import CreateChat from "./CreateChat"
+import SearchAdd from "./SearchAdd"
 import Friend from "./Friend"
 import useSWR from 'swr';
 
@@ -28,7 +28,7 @@ const FriendsTab = () => {
             </div>
 
             <Modal toggle={handleModal} modal={toggleModal} title={"Find new ChatAway friends"}>
-                <CreateChat/>
+                <SearchAdd/>
             </Modal>
             {toggleTab && 
                 <ul className="users">

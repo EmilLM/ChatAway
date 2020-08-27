@@ -12,7 +12,7 @@ import DataError from "@/General/DataError"
 const ChatAway = React.memo(({loginStatus, roomsData, loggedInUser}) => {
     
     const {data: rooms, error: roomsError} = useSWR('/api/rooms', {initialData: roomsData});
-    const {data: user , error: userError} = useSWR('/api/users/me');
+    const {data , error: userError} = useSWR('/api/users/me');
     
     const [userInRoom, setUserInRoom] = useState(null);
     const [userInChat, setUserInChat] = useState(null);
@@ -50,72 +50,40 @@ const ChatAway = React.memo(({loginStatus, roomsData, loggedInUser}) => {
         }
     }
 
-
-    // creating direct chat and adding it to the logged in user (also need to add it to the 2nd user)
-    const [addedChat, setAddedChat] = useState(null);
-    const createAndAddChat = async (username, userId) => {
+    // createChat
+    const createChat = async (username) => {
         try {
-            // check out TWO WAY REFERENCING MONGODB 
             const res = await axios.post('/api/chat', {
                 participants: [loggedInUser.username, username],
-                name: loggedInUser.username + '--' + username
-                
+                name: loggedInUser.username + '--' + username     
             })
-            console.log('Created chat', res.data);
-            // Add chat to logged in user
-            try {
-                const resp = await axios.patch(`/api/users/${loggedInUser._id}/addChat`, {
-                    chats: res.data.doc._id,
-                });
-                setAddedChat(resp.data.doc);
-                mutate('/api/users/me');
-                trigger('api/users/me')
-                console.log('Added chat:', resp.data);
-            } catch (err) {
-                console.log('Add chat error', err)
-            }
-            
-            // add chat to target user
-            try {
-                await axios.patch(`/api/users/${userId}/addChat`, {
-                    chats: res.data.doc._id,
-            
-                })
-            } catch(err) {
-                console.log(err)
-            }
-
-            // open chat
-            try {
-                const r = await axios.patch(`/api/chat/${res.data.doc._id}/addUser`, {
-                    activeUsers: loggedInUser._id
-                })
-                setUserInChat(r.data.doc);
-                setUserInRoom(false);
-                console.log('User active in chat:', r.data.doc);
-            } catch(err) {
-                console.log(err);
-            }
-
         } catch (err) {
             console.log('Create direct chat error', err.response)
         }
-    };
-
-    
-    const addUserToChat = async (chatId) => {
+    }
+   
+    // loggedInUser enters chat
+    const joinChat = async (chatId) => {
         try {
-            const res = await axios.patch(`/api/chat/${chatId}/addUser`, {
-                activeUsers: loggedInUser._id
-            })
+            // add loggedInUser to chat
+            const res = await axios.patch(`/api/chat/${chatId}/addUser`, {activeUsers: loggedInUser._id})
             setUserInChat(res.data.doc);
+
+            // Add chat to loggedInUser
+            await axios.patch(`/api/users/${loggedInUser._id}/addChat`, {chats: chatId});
+            
+            mutate('/api/users/me');
+            trigger('api/users/me')
             setUserInRoom(false);
             console.log('User active in chat:', res.data.doc);
+
         } catch(err) {
             console.log(err);
+            setJoinError(err.response);
+
         }
     }
-    
+
     const leaveChat = async (chatId) => {
         try {
             await axios.patch(`/api/chat/${chatId}/removeUser`, {activeUsers: loggedInUser._id});
@@ -126,58 +94,35 @@ const ChatAway = React.memo(({loginStatus, roomsData, loggedInUser}) => {
         }
     }
 
-    // closing chat
+    // closing chat 
+    // do not want to delete chat as it deletes chat history
     const removeChat = async (chatId) => {
         try {
-            const res = await axios.patch(`/api/users/${loggedInUser._id}/removeChat`, {
-                chats:  chatId
-       
-            })
+            const res = await axios.patch(`/api/users/${loggedInUser._id}/removeChat`, {chats:  chatId})
             console.log('chat removed', res.data)
-            setAddedChat(false);
+            setUserInChat(false);
         } catch(err) {
             console.log(err);
         }   
     }
     
-    const friendChat = async (username, userId) => {
+    const startChat = async (username, userId) => {
         // find chat based on your and friend's name
         try {
             const res = await axios.get(`/api/chat/${username}/findChat`)
             console.log('Found chat:', res.data)
 
-            // Add chat to logged in user
-            try {
-                const resp = await axios.patch(`/api/users/${loggedInUser._id}/addChat`, {
-                    chats: res.data.chat._id 
-                });
-                setAddedChat(resp.data.chat);
-                mutate('/api/users/me');
-                trigger('api/users/me')
-                console.log('Added chat:', resp.data);
-            } catch (error) {
-                console.log('Add chat error', error)
-            }
+            // open chat and add chat to logged in user
+           joinChat(res.data.chat._id)
             
             // add chat to target user
-            try {
-                await axios.patch(`/api/users/${userId}/addChat`, {
-                    chats: res.data.chat._id,
-                    
-                })
-            } catch(e) {
-                console.log(e)
-            }
-            // open chat
-            addUserToChat(res.data.chat._id)
-            
-
+            await axios.patch(`/api/users/${userId}/addChat`, {chats: res.data.chat._id, })
+           
         } catch (err) {
             console.log(err.response)
             // if theres no existing chat history, create it
-            if (err) {
-                createAndAddChat(username, userId)
-            }
+            createChat(username)    
+            
         }
         
     }
@@ -200,7 +145,7 @@ const ChatAway = React.memo(({loginStatus, roomsData, loggedInUser}) => {
                 <title>ChatAway!</title>
             </Head>
             <ChatAppContext.Provider value={{allRooms: rooms?.doc,  joinRoom, leaveRoom, userInRoom, joinError, deleteRoom, 
-                addedChat, friendChat, createAndAddChat, removeChat, addUserToChat, userInChat, leaveChat }}>
+                startChat, removeChat, joinChat, userInChat, leaveChat }}>
 
                 <Grid container style={{ border: '2px solid navy'}}>
                     <SidebarChat handleToggle={handleToggle} toggleBar={toggleBar}/>

@@ -1,7 +1,7 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 import React from "react";
 import { ServerStyleSheets } from '@material-ui/core/styles';
-import theme from '../server/theme';
+
 class MyDocument extends Document {
   render() {
     return (
@@ -9,9 +9,9 @@ class MyDocument extends Document {
         <Head>
           <meta charSet="UTF-8"/>
           <meta name="author" content="Luchian Emil"/>
-          <meta name="description" content="Next.js React Chat App"/>
+          <meta name="description" content="ChatAway - Slack-style chat app developed with the MERN stack. "/>
           
-          <meta name="keywords" content="next.js, react, chat, app"/>
+          <meta name="keywords" content="next.js, react, ChatAway, chat"/>
           <meta  name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width"/>
         
           <link  rel="stylesheet"href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"

@@ -5,7 +5,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ChatAppContext from 'components/General/ChatAppContext'
 import axios from 'axios';
-import {mutate, trigger} from 'swr'
+import {mutate} from 'swr'
 
  const DirectChatMessage = React.memo((props) => {
     
@@ -13,29 +13,30 @@ import {mutate, trigger} from 'swr'
     const {showName, username, text, avatar, messageId, data} = props;
     const [hover, setHover] = useState(false);
     
-    const handleDelete = () => {
-        const deleteMessage = async () => {
-            try {
-                await axios.delete(`/api/messages/${messageId}`)
-            } catch(err) {
-                console.log('Delete message error', err)
-            }
-            // remove messageId from chat
-            try {
-                const res = await axios.patch(`/api/rooms/${userInRoom._id}/removeMessage`, {
-                    messages: messageId
-                });
-                console.log('removed message from chat',res.data)
-            } catch (err) {
-                console.log('Remove message from chat error', err)
-            }
-        }
+   
+    const deleteMessage = async () => {
+
         const {roomMessages} = data;
         const remainingMessages= roomMessages.filter( el => el._id !== messageId)
         mutate(`/api/rooms/${userInRoom._id}/room-messages`, {roomMessages: remainingMessages}, false)
-        deleteMessage();
-        trigger(`/api/rooms/${userInRoom._id}/room-messages`)   
+        
+        try {
+            await axios.delete(`/api/messages/${messageId}`)
+            // remove messageId from chat
+            await axios.patch(`/api/rooms/${userInRoom._id}/removeMessage`, {
+                messages: messageId
+            });
+        } catch(err) {
+            // revert mutate changes on error
+            mutate(`/api/rooms/${userInRoom._id}/room-messages`, {roomMessages}, false)
+            console.log('Delete message error', err)
+        }
+        mutate(`/api/rooms/${userInRoom._id}/room-messages`) 
     }
+        
+       
+          
+  
     
 
     return (
@@ -58,7 +59,7 @@ import {mutate, trigger} from 'swr'
                                 <IconButton >
                                     <EditIcon/>
                                 </IconButton>
-                                <IconButton onClick={handleDelete}>
+                                <IconButton onClick={()=>deleteMessage()}>
                                     <DeleteIcon />
                                 </IconButton>
                             </>

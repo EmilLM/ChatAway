@@ -13,30 +13,6 @@ export default function DirectChatForm({data}) {
     const {loggedInUser} = useContext(UserContext);
     const [message, setMessage] = useState('');
 
-    const handleChange = e => setMessage(e.target.value);
-
-    const createMessage = async () => {
-        try {
-            const res = await axios.post('/api/messages', {
-                text: message,
-                user: loggedInUser.username, 
-                userAvatar: loggedInUser.avatar
-            })
-            console.log('Created message', res.data)
-            // add message to chat
-            try {
-                const resp = await axios.patch(`/api/chat/${userInChat._id}/addMessage`, {
-                    messages: res.data.doc._id     
-                })
-                console.log('Message added to chat', resp.data)
-            } catch (error) {
-                console.log(error);
-            }
-
-        } catch (err) {
-            console.log(err.response)
-        }
-    }
     const optimisticMessage = {
         _id: Math.random(),
         text: message,
@@ -45,12 +21,31 @@ export default function DirectChatForm({data}) {
     }
     const {chatMessages} = data;
 
+    const createMessage = async () => {
+        mutate(`/api/chat/${userInChat._id}/chat-messages`,{...data, chatMessages: [...chatMessages,  optimisticMessage]}, false)
+        try {
+            const res = await axios.post('/api/messages', {
+                text: message,
+                user: loggedInUser.username, 
+                userAvatar: loggedInUser.avatar
+            })
+            console.log('Created message', res.data)
+            
+            // add message to chat
+            await axios.patch(`/api/chat/${userInChat._id}/addMessage`, {messages: res.data.doc._id})
+
+        } catch (err) {
+            mutate(`/api/chat/${userInChat._id}/chat-messages`,{...data, chatMessages}, false)
+            console.log(err.response)
+        }
+        mutate(`/api/chat/${userInChat._id}/chat-messages`)
+    }
+    
+
     const handleSubmit= e => {
         e.preventDefault();
-        mutate(`/api/chat/${userInChat._id}/chat-messages`,{...data, chatMessages: [...chatMessages,  optimisticMessage]}, false)
         createMessage();
-        setMessage('');
-        mutate(`/api/chat/${userInChat._id}/chat-messages`)
+        setMessage('');   
     };
 
     return (
@@ -59,7 +54,7 @@ export default function DirectChatForm({data}) {
                 <input className="input" placeholder="Type a message..."
                        type="text"
                        value={message}
-                       onChange={handleChange}
+                       onChange={e=>setMessage(e.target.value)}
                 />
                 <IconButton type="submit" className="submitButton" disabled={!message}>
                     <SendIcon/>

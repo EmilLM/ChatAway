@@ -13,30 +13,25 @@ import {mutate, trigger} from 'swr'
     const {otherUserMessage, showName, username, text, avatar, messageId, data} = props;
     const [hover, setHover] = useState(false);
     
-    const handleDelete = () => {
-        const deleteMessage = async () => {
-            try {
-                await axios.delete(`/api/messages/${messageId}`)
-            } catch(err) {
-                console.log('Delete message error', err)
-            }
-            // remove messageId from chat
-            try {
-                const res = await axios.patch(`/api/chat/${userInChat._id}/removeMessage`, {
-                    messages: messageId
-                });
-                console.log('removed message from chat',res.data)
-            } catch (err) {
-                console.log('Remove message from chat error', err)
-            }
-        }
+    const deleteMessage = async () => {
+
         const {chatMessages} = data;
         const remainingMessages= chatMessages.filter( el => el._id !== messageId)
         mutate(`/api/chat/${userInChat._id}/chat-messages`, {chatMessages:remainingMessages}, false)
-        deleteMessage();
-        mutate(`/api/chat/${userInChat._id}/chat-messages`)         
+
+        try {
+            await axios.delete(`/api/messages/${messageId}`)
+            // remove messageId from chat
+            await axios.patch(`/api/chat/${userInChat._id}/removeMessage`, {
+                messages: messageId
+            });
+        } catch(err) {
+            // revert mutate changes on error
+            mutate(`/api/chat/${userInChat._id}/chat-messages`, {chatMessages:chatMessages}, false)
+            // console.log('Delete message error', err)
+        }
+        mutate(`/api/chat/${userInChat._id}/chat-messages`)   
     }
-    
 
     return (
         <>
@@ -63,7 +58,7 @@ import {mutate, trigger} from 'swr'
                                 <IconButton >
                                     <EditIcon/>
                                 </IconButton>
-                                <IconButton onClick={handleDelete}>
+                                <IconButton onClick={()=>deleteMessage()}>
                                     <DeleteIcon />
                                 </IconButton>
                             </>

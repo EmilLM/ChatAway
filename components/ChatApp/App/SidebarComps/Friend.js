@@ -9,20 +9,16 @@ import {mutate, trigger} from 'swr';
 const Friend = React.memo(({status, user}) => {
     const [hover, setHover] = useState(false);
     const {loggedInUser} = useContext(UserContext);
-    const {friendChat, addUserToChat} = useContext(ChatAppContext);
+    const {startChat} = useContext(ChatAppContext);
 
     const removeFriend = async (userId) => {
         // remove friend from logged in user
         try {
             await axios.patch(`/api/users/${loggedInUser._id}/removeFriend`, {friends: userId})
+            // remove logged in user as friend from target user
+            await axios.patch(`/api/users/${userId}/removeFriend`, {friends:  loggedInUser._id })
         } catch (err) {
             console.log('Remove logged user friend error'. err)
-        }
-        // remove logged in user as friend from target user
-        try {
-            await axios.patch(`/api/users/${userId}/removeFriend`, {friends:  loggedInUser._id })
-        } catch (error) {
-            console.log('Remove logged user as friend from searched user error', error);
         }
     }
 
@@ -35,7 +31,7 @@ const Friend = React.memo(({status, user}) => {
             <li 
                 className={"user " + status}
                 onMouseDown={ e=> e.preventDefault()}
-                onClick={()=>friendChat(user.username, user._id)}
+                onClick={()=>startChat(user.username, user._id)}
             >{user.username}   
             </li>
             {hover && 

@@ -10,7 +10,10 @@ const chatSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     }],
-    name: String,
+    name: { 
+        type: String,
+        unique: true
+    },
     timestamps: Date
 });
 
