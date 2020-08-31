@@ -27,12 +27,32 @@ import {mutate, trigger} from 'swr'
             });
         } catch(err) {
             // revert mutate changes on error
-            mutate(`/api/chat/${userInChat._id}/chat-messages`, {chatMessages:chatMessages}, false)
-            // console.log('Delete message error', err)
+            mutate(`/api/chat/${userInChat._id}/chat-messages`, {chatMessages}, false)
+            console.log('Delete message error', err)
         }
         mutate(`/api/chat/${userInChat._id}/chat-messages`)   
     }
 
+    // edit message
+    const [edit, setEdit] = useState(false)
+    const [editedMessage, setEditedMessage] = useState(text)      
+    
+    const handleSubmit = e => {
+        e.preventDefault()
+        const editMessage = async () => {
+            try {
+                const res = await axios.patch(`/api/messages/${messageId}`, {
+                    text: editedMessage
+                })
+                console.log('edited message:', res.data)
+            } catch (err) {
+                console.log('edit message error', err.response)
+            }
+        }
+        editMessage()
+        setEdit(false)
+        trigger(`/api/chat/${userInChat._id}/chat-messages`)
+    }
     return (
         <>
             <div 
@@ -44,27 +64,40 @@ import {mutate, trigger} from 'swr'
                     <span><Avatar src={`/uploads/userAvatars/${avatar}`} alt="user-avatar"  /></span>
                     {username}
                 </div>}
-                <div 
-                //  to avoid username display on every message in a group from the same user + different color bubble
-                    className={showName ? 'text speech-bubble': 'text'}
-                    style={{background: otherUserMessage? 'gray': 'cornflowerblue'}}
-                    id={otherUserMessage && showName? 'bubble': ''}
-                >
-                    {text}
-                    {/* display message options only on your messages not everyones */}
-                    <div className="messageOptions">
+                {edit
+                    ?<form onSubmit={handleSubmit}> 
+                        <input 
+                            type="text" 
+                            value={editedMessage}
+                            onChange={e=>setEditedMessage(e.target.value)}
+                        />
+                        <div className="editButtons">
+                            <button type="submit">Save</button>
+                            <button onClick={()=>setEdit(false)}>Cancel</button>
+                        </div>
+                        
+                    </form>
+                    :<div 
+                        //  to avoid username display on every message in a group from the same user + different color bubble
+                        className={showName ? 'text speech-bubble': 'text'}
+                        style={{background: otherUserMessage? 'gray': 'cornflowerblue'}}
+                        id={otherUserMessage && showName? 'bubble': ''}
+                    >
+                        {text}
+
+                        {/* display message options only on your messages not everyones */}
                         {hover && !otherUserMessage &&
-                            <>
-                                <IconButton >
+                            <div className="messageOptions">    
+                                <IconButton onClick={()=>setEdit(!edit)}>
                                     <EditIcon/>
                                 </IconButton>
                                 <IconButton onClick={()=>deleteMessage()}>
                                     <DeleteIcon />
-                                </IconButton>
-                            </>
-                        }  
+                                </IconButton>     
+                            </div> 
+                        } 
                     </div>
-                </div>
+                }
             </div>
             
         </>

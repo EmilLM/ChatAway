@@ -4,9 +4,11 @@ import useSWR from 'swr'
 import RoomForm from "./RoomForm";
 import {CircularProgress} from '@material-ui/core';
 import ChatAppContext from 'components/General/ChatAppContext';
+import UserContext from 'components/General/UserContext';
 import DataError from "@/General/DataError"
 
 const RoomWindow = () => {
+    const {loggedInUser} = useContext(UserContext);
     const {userInRoom, leaveRoom} = useContext(ChatAppContext)
     const {data, error} = useSWR(`/api/rooms/${userInRoom._id}/room-messages`)
     
@@ -46,6 +48,7 @@ const RoomWindow = () => {
                         // to avoid username display on every message in a group from the same user
                         const showName = !lastSender || message.user !== lastSender; 
                         lastSender = message.user
+                        const otherUserMessage = message.user !== loggedInUser?.username;
                         return (
                             <div key={message._id} id={'el'} ref={el}>
                                 <RoomMessage 
@@ -53,7 +56,8 @@ const RoomWindow = () => {
                                     username={message.user}
                                     text={message.text} 
                                     avatar={message.userAvatar}
-                                    messageId={message._id}     
+                                    messageId={message._id} 
+                                    otherUserMessage={otherUserMessage}    
                                     data={data}                   
                                 />
                             </div>

@@ -16,22 +16,30 @@ const SearchAdd = () => {
     const {startChat} = useContext(ChatAppContext)
     
     const [isLoading, setIsLoading] = useState(false);
-    const [search, setSearch] = useState(null);
+    const [search, setSearch] = useState([]);
     const [error, setError] = useState(null);
 
     const searchUsers = async (username) => {
         setIsLoading(true);
+        username = username.trim()[0].toUpperCase()  + username.slice(1).toLowerCase(); 
         try {
             const res = await axios.get(`/api/users/?username=${username}`);
-            setSearch(res.data)
-            setIsLoading(false);
+            if (res.data.results > 0) {
+                setSearch(res.data)
+                setIsLoading(false);
+            console.log('search results:', res.data)
+            } else {
+                setSearch('No users found!')
+                setIsLoading(false);
+            }
+            
         } catch (err) {
             console.log(err.response);
             setError(err.response);
             setIsLoading(false);
         }
     }
-  
+    
     const addFriend = async  (userId) => {
         
         try {
@@ -68,10 +76,10 @@ const SearchAdd = () => {
             </Formik>
 
             <ul className="searchResults">
-                {search
-                    ?search.doc.map( (user, index) => {
+                {search == [] || search.results> 0
+                    ?search.doc.map( user => {
                             return (
-                                <li key={index} className="searchedUser"> 
+                                <li key={user._id} className="searchedUser"> 
                                     <div className="avatar-name">
                                         <Avatar src={`/uploads/userAvatars/${user.avatar}`}  alt="user-image"/>
                                         <div>{user.username}</div>
@@ -83,7 +91,7 @@ const SearchAdd = () => {
                                 </li>
                             )
                         })
-                    :error?<small style={{margin: "15px"}}>{error.data.message}!</small>:null
+                    :<p style={{margin: "15px"}}>{search}</p>
                 }
             </ul>
         </>

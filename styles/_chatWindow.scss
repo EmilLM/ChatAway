@@ -5,28 +5,51 @@
 }
 
 .messageForm {
-  height: 10vh;
   width: 100%;
-  border-top: 1px solid navy;
-  // display: flex;
-  // align-items: center;
-  // justify-content: space-between;
+  height: 5vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  form {
+    border: 1px solid navy;
+    border-radius: 5px;
+    width: 97%;
+    
+  }
     input {
       border: none;
-      margin-top: 1.5vh;
-      width: 80%;
+      border-radius: 5px;
       outline: none;
-      font-size: 20px;
-      margin-left: 15px;
+      font-size: 18px;
+      padding: 10px 15px;
+      width: 100%;
     }
-    button {
-      margin-left: 10px;
-      border: none;
-      background: none;
-      outline: none;
-      color: navy;
-      &:hover {
-        color: red;
+    .formOptions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgb(241, 238, 238);
+      padding: 7px;
+      border-radius: 0 0 5px 5px; 
+      div { 
+        min-width: 150px;
+        width: 20%;
+        display: flex;
+        justify-content: space-evenly;
+        button {
+          &:hover {
+            color: navy;
+          }
+        }
+        .submitButton {
+          padding: 0 0;
+          border: none;
+          border-radius: 3px;
+          min-width: 32px;
+          height: 24px;
+          outline: none;
+          
+        }
       }
     }
 
@@ -39,6 +62,16 @@
   flex-direction: column;
   .roomDescription {
     margin: 20px;
+    border: 2px solid gray;
+    padding: 5px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 500;
+    color: navy;
+    background: rgb(246, 246, 247);
+    text-align: center;
+    // box-shadow: inset 0px 0px 20px -1px rgba(108, 95, 184, 0.75);
+    box-shadow: 0px 5px 24px -4px rgba(59,76,130,1);
   }
   .messageList {
 
@@ -127,16 +160,17 @@
     position: absolute;
     top:-15px;
     right: -25px;
-    color: gray;
-    // border: 1px solid black;
-    background: lightblue;
+    
+    border: 1.5px solid lightgray;
+    background: white;
     border-radius: 5px;
     .MuiSvgIcon-root {
       height: 0.7em;
       width: 0.7em;
       padding-bottom: 2px;
+      color: navy;
       &:hover {
-        color: black;
+        color: gray;
       }
     }
   }
@@ -161,4 +195,20 @@
   }
 }
 
+.editButtons {
+  display: flex;
+  justify-content: space-evenly;
+  button {
+    color: blue;
+    padding: 3px;
+    font-size: 10px;
+    border: none;
+    background: none;
+    outline: none;
+    font-weight: 700;
+    &:hover {
+      color: lightgray;
+    }
+  }
+}
 

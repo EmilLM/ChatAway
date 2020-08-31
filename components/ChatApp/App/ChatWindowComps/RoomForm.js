@@ -1,6 +1,7 @@
 import React, {useState, useContext} from "react";
 import UserContext from 'components/General/UserContext';
 import ChatAppContext from 'components/General/ChatAppContext'
+import ChatForm from 'components/General/ChatForm'
 import axios from 'axios';
 import {mutate} from 'swr'
 
@@ -50,19 +51,11 @@ export default function RoomForm({data}) {
         createMessage();
         setMessage(''); 
     };
+    const handleChange = e => {
+        setMessage(e.target.value)
+    }
 
     return (
-        <div className="messageForm">
-            <form onSubmit={handleSubmit}>
-                <input className="input" placeholder="Type a message..."
-                       type="text"
-                       value={message}
-                       onChange={e=>setMessage(e.target.value)}
-                />
-                <IconButton type="submit" className="submitButton" disabled={!message}>
-                    <SendIcon/>
-                </IconButton>
-            </form>
-        </div>
+        <ChatForm handleChange={handleChange} handleSubmit={handleSubmit} message={message}/>
     )
 }

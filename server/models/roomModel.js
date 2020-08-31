@@ -20,6 +20,7 @@ const roomsSchema = new mongoose.Schema ({
     }],
     description: {
         type: String,
+        default: 'Default room description. Edit this to inform users about the specifics topics discussed here.',
         maxlength: [200, 'Description must be max 200 characters!']
     },
     isPrivate: {
