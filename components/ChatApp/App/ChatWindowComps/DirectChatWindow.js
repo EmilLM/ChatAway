@@ -1,11 +1,16 @@
-import React, {useState, useEffect, useRef, useContext} from "react";
+import React, {useEffect, useRef, useContext} from "react";
 import DirectChatMessage from './DirectChatMessage'
-import useSWR from 'swr'
+
 import DirectChatForm from './DirectChatForm'
 import DataError from "@/General/DataError"
 import ChatAppContext from 'components/General/ChatAppContext'
-import {CircularProgress} from '@material-ui/core';
 import UserContext from '@/General/UserContext'
+import RoomDetails from "./RoomDetails";
+import SidebarToggleButton from "@/General/SidebarToggleButton"
+
+import Avatar from '@material-ui/core/Avatar';
+import {CircularProgress} from '@material-ui/core';
+import useSWR from 'swr'
 
 const DirectChatWindow = () => {
 
@@ -13,13 +18,7 @@ const DirectChatWindow = () => {
     const {userInChat, leaveChat} = useContext(ChatAppContext);
     const {data, error} = useSWR(`/api/chat/${userInChat._id}/chat-messages`)
     
-    console.log('chat messages', data)
-    // const data = data?.doc.messages.sort(function(a, b) {
-    //     a = new Date(a.createdAt);
-    //     b = new Date(b.createdAt);
-    //     return a<b ? -1 : a>b ? 1 : 0;
-    // });
-    
+
     const el = useRef(null);
     useEffect(()=> {
         if (el.current) {
@@ -31,16 +30,17 @@ const DirectChatWindow = () => {
         return () => leaveChat(userInChat._id)
     }, [userInChat])
 
-    // to avoid username display on every message in a group from the same user
+    // to avoid username display on consecutive messages from the same user
     let lastSender = undefined;
 
     if (error) return <DataError/>
     if (data) return (  
         <>
+            <ChatInfo />
             <div className="joinRoom">
                 <div className="messageList">
                     {data?.chatMessages.map(message => {
-                        // to avoid username display on every message in a group from the same user + different color bubble
+                        // to avoid username display on consecutive messages from the same user + different color bubble
                         const showName = !lastSender || message.user !== lastSender; 
                         lastSender = message.user
                         const otherUserMessage = message.user !== loggedInUser?.username;
@@ -49,10 +49,7 @@ const DirectChatWindow = () => {
                                 <DirectChatMessage
                                     otherUserMessage={otherUserMessage}
                                     showName={showName}
-                                    username={message.user}
-                                    text={message.text} 
-                                    avatar={message.userAvatar} 
-                                    messageId={message._id}
+                                    message={message}
                                     data={data}                       
                                 />
                             </div>
@@ -65,5 +62,27 @@ const DirectChatWindow = () => {
     )
     return <div className="loading"><CircularProgress /></div>
 }
-// DirectChatWindow.whyDidYouRender = true; 
+
 export default DirectChatWindow;
+
+const ChatInfo = () => {
+    const {loggedInUser} = useContext(UserContext)
+    const {userInChat} = useContext(ChatAppContext);
+    const chatWith = userInChat?.participants.filter( (name) =>  name !== loggedInUser?.username) 
+    const {data} = useSWR(`/api/users/${chatWith}/find-user`); 
+
+    return (
+        <div className="roomInfo">
+            <SidebarToggleButton />
+            <div className="chatUserInfo">
+                <Avatar src={`/uploads/userAvatars/${data?.user.avatar}`} 
+                            alt="user-image" className="user-image">
+                            {data?.user.username[0]}
+                </Avatar>
+                <h2>{chatWith}</h2>
+            </div> 
+            
+            <RoomDetails/>
+        </div>
+    )
+}

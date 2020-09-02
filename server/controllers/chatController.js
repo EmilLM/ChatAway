@@ -17,7 +17,6 @@ exports.removeFromChat = factory.removeFromModel(Chat);
 exports.friendChat = catchAsync( async (req, res, next) => {
     const loggedInName = req.user.username;
     const targetName = req.params.name
-    // only works from the side of the users that started the first chat, find alternative!!
     const chat = await Chat.findOne({name: loggedInName + '--' + targetName});
     if (!chat) return next(new AppError('No chat found!', 404));
     res.json({

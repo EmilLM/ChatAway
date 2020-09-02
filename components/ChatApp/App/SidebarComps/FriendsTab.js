@@ -7,7 +7,6 @@ import SearchAdd from "./SearchAdd"
 import Friend from "./Friend"
 import useSWR from 'swr';
 
-// Later turn into a friends tab
 const FriendsTab = () => {
     const [toggleTab, setToogleTab] = useState(true);
     const handleToggle = () => setToogleTab(!toggleTab);

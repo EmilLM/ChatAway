@@ -35,8 +35,8 @@ const DirectChatTab = () => {
         { toggleTab &&
            <div className="directChats">
                 {chats?.map( (chat) => {
-                    const status =  data.doc.connected ? "online" : "offline"
-                    return <DirectChat key={chat._id} chat={chat} status={status}/>
+                    
+                    return <DirectChat key={chat._id} chat={chat}/>
                 })}
             </div>
         }

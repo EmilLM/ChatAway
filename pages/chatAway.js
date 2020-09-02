@@ -59,6 +59,7 @@ const ChatAway = React.memo(({loginStatus, roomsData, loggedInUser}) => {
             })
         } catch (err) {
             console.log('Create direct chat error', err.response)
+            setJoinError(err.response)
         }
     }
    
@@ -75,7 +76,7 @@ const ChatAway = React.memo(({loginStatus, roomsData, loggedInUser}) => {
             mutate('/api/users/me');
             trigger('api/users/me')
             setUserInRoom(false);
-            console.log('User active in chat:', res.data.doc);
+            // console.log('User active in chat:', res.data.doc);
 
         } catch(err) {
             console.log(err);
@@ -130,7 +131,7 @@ const ChatAway = React.memo(({loginStatus, roomsData, loggedInUser}) => {
 
     // toggle the Sidebar on xs
     const [toggleBar, setToggleBar] = useState(false);
-    const handleToggle = () => setToggleBar(!toggleBar);
+    const handleToggleBar = () => setToggleBar(!toggleBar);
 
     useEffect( () => {
         if (loginStatus === "logged-out") {
@@ -145,11 +146,11 @@ const ChatAway = React.memo(({loginStatus, roomsData, loggedInUser}) => {
                 <title>ChatAway!</title>
             </Head>
             <ChatAppContext.Provider value={{allRooms: rooms?.doc,  joinRoom, leaveRoom, userInRoom, joinError, deleteRoom, 
-                startChat, removeChat, joinChat, userInChat, leaveChat }}>
+                startChat, removeChat, joinChat, userInChat, leaveChat, handleToggleBar }}>
 
                 <Grid container style={{ border: '2px solid navy'}}>
-                    <SidebarChat handleToggle={handleToggle} toggleBar={toggleBar}/>
-                    <ChatWindow handleToggle={handleToggle}/>
+                    <SidebarChat handleToggleBar={handleToggleBar} toggleBar={toggleBar}/>
+                    <ChatWindow />
                 </Grid>
 
             </ChatAppContext.Provider>

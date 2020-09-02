@@ -1,25 +1,21 @@
-import React, {useState, useEffect, useContext} from "react";
-
-
+import {useContext} from "react";
 import UserInfo from "../SidebarComps/UserInfo";
 import RoomTab from "../SidebarComps/RoomTab";
 import DirectChatTab from "../SidebarComps/DirectChatTab";
 import FriendsTab from "./FriendsTab"
+import ChatAppContext from '@/General/ChatAppContext'
 
 import Grid from '@material-ui/core/Grid';
 import Backdrop from '@material-ui/core/Backdrop';
 import Button from '@material-ui/core/Button';
 
-// import MenuOpenIcon from '@material-ui/icons/MenuOpen';
-// startIcon={<MenuOpenIcon />}
-
-
-const SiderbarToggled = ({toggleBar, handleToggle}) => {
+const SiderbarToggled = ({toggleBar}) => {
+    const {handleToggleBar} = useContext(ChatAppContext)
     return ( 
         <>
-            <Backdrop className="backdrop" open={toggleBar} onClick={handleToggle}>
+            <Backdrop className="backdrop" open={toggleBar} onClick={handleToggleBar}>
                 <Button variant="contained" color="primary" 
-                    onClick={handleToggle} className="closeSidebar"
+                    onClick={handleToggleBar} className="closeSidebar"
                 >X</Button>
             </Backdrop>
             <Grid  item sm={3}  id="appSidebar" className="sidebarIndex">

@@ -10,20 +10,20 @@ import {mutate, trigger} from 'swr'
  const DirectChatMessage = React.memo((props) => {
    
     const {userInChat} = useContext(ChatAppContext);
-    const {otherUserMessage, showName, username, text, avatar, messageId, data} = props;
+    const {otherUserMessage, showName, message, data} = props;
     const [hover, setHover] = useState(false);
     
     const deleteMessage = async () => {
 
         const {chatMessages} = data;
-        const remainingMessages= chatMessages.filter( el => el._id !== messageId)
+        const remainingMessages= chatMessages.filter( el => el._id !== message._id)
         mutate(`/api/chat/${userInChat._id}/chat-messages`, {chatMessages:remainingMessages}, false)
 
         try {
-            await axios.delete(`/api/messages/${messageId}`)
+            await axios.delete(`/api/messages/${message._id}`)
             // remove messageId from chat
             await axios.patch(`/api/chat/${userInChat._id}/removeMessage`, {
-                messages: messageId
+                messages: message._id
             });
         } catch(err) {
             // revert mutate changes on error
@@ -35,13 +35,13 @@ import {mutate, trigger} from 'swr'
 
     // edit message
     const [edit, setEdit] = useState(false)
-    const [editedMessage, setEditedMessage] = useState(text)      
+    const [editedMessage, setEditedMessage] = useState(message.text)      
     
     const handleSubmit = e => {
         e.preventDefault()
         const editMessage = async () => {
             try {
-                const res = await axios.patch(`/api/messages/${messageId}`, {
+                const res = await axios.patch(`/api/messages/${message._id}`, {
                     text: editedMessage
                 })
                 console.log('edited message:', res.data)
@@ -61,8 +61,8 @@ import {mutate, trigger} from 'swr'
                 onMouseLeave={ ()=>setHover(false)}
             >
                 {showName && <div className="sender">
-                    <span><Avatar src={`/uploads/userAvatars/${avatar}`} alt="user-avatar"  /></span>
-                    {username}
+                    <span><Avatar src={`/uploads/userAvatars/${message.userAvatar}`} alt="user-avatar"  /></span>
+                    {message.user}
                 </div>}
                 {edit
                     ?<form onSubmit={handleSubmit}> 
@@ -83,7 +83,7 @@ import {mutate, trigger} from 'swr'
                         style={{background: otherUserMessage? 'gray': 'cornflowerblue'}}
                         id={otherUserMessage && showName? 'bubble': ''}
                     >
-                        {text}
+                        {message.text}
 
                         {/* display message options only on your messages not everyones */}
                         {hover && !otherUserMessage &&

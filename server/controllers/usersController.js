@@ -116,6 +116,16 @@ exports.addToUser  = factory.addToModel(User);
 exports.removeFromUser = factory.removeFromModel(User)
 
 
+exports.findUserByName = catchAsync( async (req, res, next) => {
+    const targetName = req.params.name
+    const user = await User.findOne({username: targetName});
+    if (!user) return next(new AppError('No chat found!', 404));
+    res.json({
+        user
+    })
+})
+
+
 // Mongo aggregation pipeline
 // exports.userFriendstats = catchAsync(async (req, res, next) => {
 //     const stats = await User.aggregate([

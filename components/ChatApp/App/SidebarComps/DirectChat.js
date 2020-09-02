@@ -4,16 +4,19 @@ import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
 import ChatAppContext from 'components/General/ChatAppContext';
 import UserContext from 'components/General/UserContext';
-import {mutate, trigger} from 'swr';
+import useSWR, {mutate, trigger} from 'swr';
 
-const DirectChat = ({chat, status}) => {
+const DirectChat = ({chat}) => {
 
     const {removeChat, joinChat} = useContext(ChatAppContext);
     const {loggedInUser} = useContext(UserContext);
 
     const [hover, setHover] = useState(false);
 
-  
+    const chatUsername = chat?.participants.filter( (name) =>  name !== loggedInUser?.username)
+    const {data: userChat} = useSWR(`/api/users/${chatUsername}/find-user`);
+    const status =  userChat?.user.connected ? "online" : "offline";
+    
     return (
         <ul 
             onMouseEnter={ ()=>setHover(true)} 

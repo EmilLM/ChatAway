@@ -13,7 +13,7 @@ const NavBar = () => {
             <a className="logo" href={loggedInUser?"/chatAway":"/index"}>
                 <img src="/logo.png" alt="logo"/>
             </a>
-            <ul className="navLinks">
+            <div className="navLinks">
                 <Link  href={!!loggedInUser?"/chatAway":"/index"}>
                     <Button  className="nav-link">{loggedInUser?"ChatAway":"Home"} </Button>
                 </Link>
@@ -23,7 +23,7 @@ const NavBar = () => {
                 {!!loggedInUser && <Link  href="/user-profile/main">
                     <Button className="nav-link">Profile</Button>
                 </Link> }
-            </ul>
+            </div>
         </nav>
     )
 };

@@ -2,7 +2,7 @@ const express = require('express');
 const usersController = require('../controllers/usersController');
 const authController = require('../controllers/authController')
 
-const {uploadAvatar, resizeAvatar, getAllUsers, createUser, getUser, updateUser, deleteUser, 
+const {uploadAvatar, resizeAvatar, getAllUsers, createUser, getUser, updateUser, deleteUser, findUserByName,
     aliasMostFriends, userFriendstats, updateMe, deleteMe, getMe, addToUser, removeFromUser} = usersController;
 
 
@@ -41,6 +41,8 @@ router.patch('/:id/removeFriend', removeFromUser)
 
 router.patch('/:id/addChat', addToUser)
 router.patch('/:id/removeChat', removeFromUser)
+
+router.get('/:name/find-user', findUserByName)
 // mw to restrict to admin 
 router.use(authController.restrictTo('admin'))
 

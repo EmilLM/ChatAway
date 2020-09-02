@@ -8,7 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 
 
-const SidebarChat = ({handleToggle, toggleBar}) => {
+const SidebarChat = ({ toggleBar}) => {
     if (!toggleBar) return ( 
         <Grid component={Box} item sm={3} xs="auto" id="appSidebar" display={{ xs: 'none', sm: 'block' }}>
             <div className="sidebarContainer"> 
@@ -20,7 +20,7 @@ const SidebarChat = ({handleToggle, toggleBar}) => {
         </Grid>
     )
     if (toggleBar) return (
-        <SiderbarToggled handleToggle={handleToggle} toggleBar={toggleBar}/>
+        <SiderbarToggled toggleBar={toggleBar}/>
     )
 }
  
