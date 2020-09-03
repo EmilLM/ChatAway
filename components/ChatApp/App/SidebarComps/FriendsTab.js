@@ -30,16 +30,15 @@ const FriendsTab = () => {
                 <SearchAdd/>
             </Modal>
             {toggleTab && 
-                <ul className="users">
+                <div className="friends">
                     {
                         friends?.length === 0
                         ?<div>Find some friends!</div>
                         :friends?.map( (user) => {
-                            const status =  user.connected ? "online" : "offline"
-                            return <Friend key={user._id} status={status} user={user}/>
+                            return <Friend key={user._id}  user={user}/>
                         })
                     }
-                </ul>
+                </div>
             }
         </>
      );

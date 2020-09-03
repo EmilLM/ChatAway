@@ -106,7 +106,7 @@
     background: cornflowerblue;
   }
   .rooms {
-    color: rgb(2, 2, 17);
+    color: navy;
     width: 100%;
     max-height: 150px;
     overflow-y: auto;
@@ -137,13 +137,15 @@
   }
   .directChats {
    ul {
-    margin: 0;
     padding-left: 40px;
+    margin: 0;
    }
     @extend .rooms;
     .directChat {
       cursor: pointer;
-      display: flex;  
+      display: flex; 
+      align-items: center; 
+
     }
     .closeChat {
       margin-left: 20px;
@@ -174,16 +176,54 @@
       }
     }
   }
-  .users {
-    @extend .directChats;
+  .friends{
+    color: navy;
+    width: 100%;
+    max-height: 150px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    list-style: none;
+    margin: 0;
     
-    .user {
-      @extend .directChat;
+    ul {
+      padding: 0;
+      display: flex;
+      margin: 0;
+      &:hover {
+        background: blue;
+      }
+      .friend {
+        margin: 0 0 0 5px;
+        cursor: pointer;
+        display: flex; 
+        align-items: center; 
+      }
+      .closeChat {
+        margin-left: 20px;
+        .MuiSvgIcon-root {
+          height: 0.7em;
+          width: 0.7em;
+        }
+      }
     }
-    div {
-      margin-left: 15px;
-    }
+    
+    
   }
 }
+.offlineAvatar {
+  color: gray;
+  img {
+    opacity: 0.4;
+  }
+} 
+.userAvatar {
+  margin: 0 !important;  
+  height: 28px !important;
   
-
+  img {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    
+  }
+}

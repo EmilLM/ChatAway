@@ -146,7 +146,7 @@ const ChatAway = React.memo(({loginStatus, roomsData, loggedInUser}) => {
                 <title>ChatAway!</title>
             </Head>
             <ChatAppContext.Provider value={{allRooms: rooms?.doc,  joinRoom, leaveRoom, userInRoom, joinError, deleteRoom, 
-                startChat, removeChat, joinChat, userInChat, leaveChat, handleToggleBar }}>
+                startChat, removeChat, joinChat, userInChat, leaveChat, handleToggleBar, setToggleBar }}>
 
                 <Grid container style={{ border: '2px solid navy'}}>
                     <SidebarChat handleToggleBar={handleToggleBar} toggleBar={toggleBar}/>

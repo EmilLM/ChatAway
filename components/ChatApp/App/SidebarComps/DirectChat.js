@@ -5,10 +5,11 @@ import IconButton from '@material-ui/core/IconButton';
 import ChatAppContext from 'components/General/ChatAppContext';
 import UserContext from 'components/General/UserContext';
 import useSWR, {mutate, trigger} from 'swr';
+import Avatar from '@material-ui/core/Avatar';
 
 const DirectChat = ({chat}) => {
 
-    const {removeChat, joinChat} = useContext(ChatAppContext);
+    const {removeChat, joinChat, setToggleBar} = useContext(ChatAppContext);
     const {loggedInUser} = useContext(UserContext);
 
     const [hover, setHover] = useState(false);
@@ -25,20 +26,22 @@ const DirectChat = ({chat}) => {
             <li 
                 className={"directChat " + status} 
                 onMouseDown={ e=> e.preventDefault()}
-                onClick={()=>joinChat(chat._id)}
+                onClick={()=>{joinChat(chat._id), setToggleBar(false) }}
             >
-                {chat?.participants.filter( (name) =>  name !== loggedInUser?.username)}
+                {/* <Avatar src={`/uploads/userAvatars/${userChat?.user.avatar}`} alt="user-avatar" className="userAvatar" /> */}
+                {chatUsername}
             </li>
             {hover && 
-            <IconButton 
-                className={"closeChat"} 
-                onClick={() => {
-                    removeChat(chat._id);
-                    mutate('/api/users/me');
-                    trigger('/api/users/me');
-                }} >
-                <CloseIcon />
-            </IconButton>}
+                <IconButton 
+                    className={"closeChat"} 
+                    onClick={() => {
+                        removeChat(chat._id);
+                        mutate('/api/users/me');
+                        trigger('/api/users/me');
+                    }} >
+                    <CloseIcon />
+                </IconButton>
+            }
         </ul>
       );
 }

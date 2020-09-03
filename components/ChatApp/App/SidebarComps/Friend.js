@@ -5,11 +5,14 @@ import UserContext from '@/General/UserContext'
 import ChatAppContext from '@/General/ChatAppContext'
 import axios from 'axios';
 import {mutate, trigger} from 'swr';
+import Avatar from '@material-ui/core/Avatar';
 
-const Friend = React.memo(({status, user}) => {
+const Friend = React.memo(({user}) => {
     const [hover, setHover] = useState(false);
     const {loggedInUser} = useContext(UserContext);
-    const {startChat} = useContext(ChatAppContext);
+    const {startChat, setToggleBar} = useContext(ChatAppContext);
+
+    const status =  user.connected && "offlineAvatar";
 
     const removeFriend = async (userId) => {
         // remove friend from logged in user
@@ -29,21 +32,24 @@ const Friend = React.memo(({status, user}) => {
             onMouseLeave={ ()=>setHover(false)}
         >
             <li 
-                className={"user " + status}
+                className={"friend " + status}
                 onMouseDown={ e=> e.preventDefault()}
-                onClick={()=>startChat(user.username, user._id)}
-            >{user.username}   
+                onClick={()=>{startChat(user.username, user._id), setToggleBar(false)}}
+            > 
+                <Avatar src={`/uploads/userAvatars/${user.avatar}`} alt="user-avatar" className="userAvatar" />
+                {user.username}   
             </li>
             {hover && 
-            <IconButton 
-                className={"closeChat"} 
-                onClick={() => {
-                    removeFriend(user._id)
-                    mutate('/api/users/me');
-                    trigger('/api/users/me');
-                }} >
-                <CloseIcon />
-            </IconButton> }  
+                <IconButton 
+                    className={"closeChat"} 
+                    onClick={() => {
+                        removeFriend(user._id)
+                        mutate('/api/users/me');
+                        trigger('/api/users/me');
+                    }} >
+                    <CloseIcon />
+                </IconButton> 
+            }   
         </ul>
          
     );

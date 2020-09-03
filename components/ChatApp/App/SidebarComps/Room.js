@@ -5,7 +5,7 @@ import UserContext from 'components/General/UserContext';
 
 const RoomsList = ({room, active}) => {
 
-    const { joinRoom} = useContext(ChatAppContext);
+    const { joinRoom, setToggleBar} = useContext(ChatAppContext);
     const {loggedInUser} = useContext(UserContext);
     const [hover, setHover] = useState(false);
     
@@ -16,7 +16,7 @@ const RoomsList = ({room, active}) => {
         >
             <li  
                 className={"room"} 
-                onClick={()=>joinRoom(room._id, loggedInUser._id)} 
+                onClick={()=>{joinRoom(room._id, loggedInUser._id), setToggleBar(false)}} 
                 onMouseDown={e=>e.preventDefault()}
             >
                  # {room.name}   
