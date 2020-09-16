@@ -26,7 +26,7 @@ const createSendToken = (user, statusCode, req, res, rememberMe) => {
     const cookieOptions = {
         expires: new Date(Date.now() + maxAge),
         httpOnly: true,
-        // secure : req.secure  || req.headers('x-forward-proto') === 'https',
+        secure : req.secure  || req.headers('x-forward-proto') === 'https',
         sameSite: 'strict',
         path: '/'
     };
