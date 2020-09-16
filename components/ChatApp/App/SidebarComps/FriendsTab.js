@@ -31,13 +31,10 @@ const FriendsTab = () => {
             </Modal>
             {toggleTab && 
                 <div className="friends">
-                    {
-                        friends?.length === 0
-                        ?<div>Find some friends!</div>
-                        :friends?.map( (user) => {
-                            return <Friend key={user._id}  user={user}/>
-                        })
-                    }
+                    <div>You have {friends?.length} {friends?.length === 1 ? 'friend': "friends"}!</div> 
+                    {friends?.map( (user) => {
+                        return <Friend key={user._id}  user={user}/>
+                    })}    
                 </div>
             }
         </>

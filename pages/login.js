@@ -17,7 +17,7 @@ import Head from "next/head";
 
 const LoginPage = () => {
 
-    const [error, setLoginError ] = useState(null);
+    const [error, setError ] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const {handleAuth, loggedInUser} = useContext(UserContext);
 
@@ -33,20 +33,20 @@ const LoginPage = () => {
                     rememberMe
                 }
             });
-            if (res.data) Router.push('/chatAway')
+            if (res.data) Router.replace('/chatAway')
             // method for lifting state up to _app.js
             handleAuth(res.data.data);
             setIsLoading(false) 
         } catch(err) {
             console.log(err.response);
-            setLoginError(err.response);
+            setError(err.response);
             setIsLoading(false) ;
         }
     }
     
     useEffect( () => {
         Router.prefetch('/chatAWay')
-        // if (loggedInUser) Router.push('/chatAway')
+        
     }, []);
 
  
@@ -86,7 +86,7 @@ const LoginPage = () => {
                         <FormikInput name="password"  type="password" label="Password"/>
                         <FormikCheckbox name="rememberMe">Remember me?</FormikCheckbox>
 
-                        {error?<small>{error.data.message}!</small>:null}
+                        {error?<small>{error.data.message}</small>:null}
                     
                         <Button variant="contained" color="primary" type="submit" className="customButton" disabled={isLoading}>
                             {!isLoading?"Submit":<CircularProgress style={{color:"white"}} size={25.5}/>}

@@ -24,8 +24,9 @@ const ChangePassForm = () => {
             setIsLoading(false);
             setPassChanged(res.data); 
         } catch (err) {
+            console.warn(err.response)
             setIsLoading(false) 
-            setError(err)
+            setError(err.response)
         }
     }
     return (
@@ -63,7 +64,7 @@ const ChangePassForm = () => {
                     <FormikInput name="passwordNew" label="New password" type="password"/>
                     <FormikInput name="passwordConfirm" label="Repeat new password" type="password"/>
                     
-                    {error?<small>{error.data.message}!</small>:null}
+                    {error?<small>{error.data.message}</small>:null}
                     {passChanged && !error && !isLoading? <div className="edited">Password change succesful!</div> : null}
                     <Button variant="contained" color="primary" type="submit" className="customButton" disabled={isLoading}>
                         {!isLoading?"Submit":<CircularProgress style={{color:"white"}} size={25.5}/>}

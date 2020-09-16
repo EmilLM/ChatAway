@@ -21,10 +21,11 @@ const  ForgotPassword = () => {
             const res = await axios.post('/api/users/forgotPassword', {email});
             setForgotPass(res.data);
             setIsLoading(false);
+            setError(null)
             console.log(res.data)
         } catch (err) {
             console.log(err.response);
-            setError(error);
+            setError(err.response);
             setIsLoading(false); 
         }
     }
@@ -51,7 +52,7 @@ const  ForgotPassword = () => {
                         <FormikInput label="Email" name="email" type="text"/>
                         
                         {error
-                        ?<small>{error.response.data.message}!</small>
+                        ?<small>{error.data.message}</small>
                         :forgotPass
                             ?<small className="edited">Email password reset sent!</small>
                             : null}

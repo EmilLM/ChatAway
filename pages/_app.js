@@ -8,6 +8,7 @@ import Router from 'next/router';
 import axios from 'axios';
 import useSWR, {SWRConfig} from 'swr';
 
+
 // import whyDidYouRender from '@welldone-software/why-did-you-render'
 // Material UI integration imports
 import PropTypes from 'prop-types';
@@ -26,20 +27,28 @@ if (process.env.NODE_ENV !== 'production') {
 //   whyDidYouRender(React)
 // }
 
-export default function MyApp({ Component, pageProps }) {
-  
 
+export default function MyApp({ Component, pageProps}) {
+  
+  
   const [loginStatus, setLoginStatus] = useState(false);
-  const [loggedInUser, setLoggedInUser] = useState(null);
+  const [loggedInUser, setLoggedInUser] = useState();
+  const [loading ,setLoading] = useState(true)
+
+  // const {data: swrUser, error } = useSWR('/loggedIn', (...args) => axios(...args).then(res => res.data.user ))
+  // console.log('SWR user', swrUser)
+
  
   const checkLoginStatus = async () => {
+    setLoading(true)
     try {
       const res= await axios.get('/loggedIn')
-   
+      console.log('Log in status', res.data)
       // for various situations of loggedIn status
       if (res.data && !loginStatus) {
-        setLoginStatus(res.data.status);
+        setLoginStatus(true);
         setLoggedInUser(res.data.user);
+        setLoading(false)
       } else if (!res.data.status && loginStatus) {
         setLoginStatus(false);
         setLoggedInUser(null);
@@ -48,13 +57,11 @@ export default function MyApp({ Component, pageProps }) {
       console.log(err.response);
     }  
   }
-  // const {data: loggedInUser, error } = useSWR('/api/users/me')
-  
-  // method to lift up state from login
-  const handleAuth = (data) => {
+  const handleAuth = (data) => {    
     setLoginStatus(true);
     setLoggedInUser(data.user)
   }
+
 
   const handleLogout = async () => {
     try {
@@ -80,22 +87,17 @@ export default function MyApp({ Component, pageProps }) {
     if (loginStatus === "logged-out") {
       Router.replace('/index');
     }
-  }, [loggedInUser])
+  }, [])
   
-  // const memoizedValue = useMemo( () => ({
-  //   loggedInUser,
-  //   handleLogout,
-  //   handleAuth
-  // }), [loggedInUser, handleLogout, handleAuth])
-  
-   return (
+  if (loading) return null
+  return (
     <UserContext.Provider value={{loggedInUser, handleLogout, handleAuth}}>
       <ThemeProvider theme={theme}>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
         <SWRConfig value={{ fetcher: (...args) => axios(...args).then(res => res.data )}}>
           <Layout >
-            <Component {...pageProps} loggedInUser={loggedInUser}  loginStatus={loginStatus}/>
+            <Component {...pageProps} loggedInUser={loggedInUser}  loginStatus={loginStatus} handleLogout={handleLogout}/>
           </Layout>
         </SWRConfig>
       </ThemeProvider>
@@ -106,4 +108,5 @@ MyApp.propTypes = {
   Component: PropTypes.elementType.isRequired,
   pageProps: PropTypes.object.isRequired,
 };
+
 

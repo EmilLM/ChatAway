@@ -1,19 +1,19 @@
 import React, {useState, useEffect, useContext} from "react";
 import axios from 'axios';
 import useSWR, {mutate, trigger} from 'swr';
-import ChatAppContext from 'components/General/ChatAppContext';
+import ChatAppContext from '@/General/ChatAppContext';
 import Grid from '@material-ui/core/Grid';
-import SidebarChat from "components/ChatApp/App/SidebarComps/SidebarChat";
-import ChatWindow from "components/ChatApp/App/ChatWindowComps/ChatWindow";
+import SidebarChat from "@/SidebarComps/SidebarChat";
+import ChatWindow from "@/ChatWindowComps/ChatWindow";
 import Router from "next/router";
 import Head from 'next/head';
 import DataError from "@/General/DataError"
 
-const ChatAway = React.memo(({loginStatus, roomsData, loggedInUser}) => {
+const ChatAway = React.memo(({loginStatus, roomsData, loggedInUser, handleLogout}) => {
     
-    const {data: rooms, error: roomsError} = useSWR('/api/rooms', {initialData: roomsData});
-    const {data , error: userError} = useSWR('/api/users/me');
-    
+    const {data: rooms, error: roomsError} = useSWR('/api/rooms' ,{initialData: roomsData});
+    // const {data, error} = useSWR('/loggedIn');
+   
     const [userInRoom, setUserInRoom] = useState(null);
     const [userInChat, setUserInChat] = useState(null);
     const [joinError, setJoinError] = useState(null);
@@ -31,8 +31,7 @@ const ChatAway = React.memo(({loginStatus, roomsData, loggedInUser}) => {
 
     const leaveRoom = async (roomId) => {
         try {
-            const res = await axios.patch(`/api/rooms/${roomId}/leave`, {users: loggedInUser._id})
-            console.log('Left room')
+            await axios.patch(`/api/rooms/${roomId}/leave`, {users: loggedInUser._id})
             setUserInRoom(false)
         } catch(err) {
             // add error handling
@@ -88,7 +87,6 @@ const ChatAway = React.memo(({loginStatus, roomsData, loggedInUser}) => {
     const leaveChat = async (chatId) => {
         try {
             await axios.patch(`/api/chat/${chatId}/removeUser`, {activeUsers: loggedInUser._id});
-            console.log('Left chat')
             setUserInChat(false);
         } catch(err) {
             console.log('Left chat error', err)
@@ -112,7 +110,7 @@ const ChatAway = React.memo(({loginStatus, roomsData, loggedInUser}) => {
         try {
             const res = await axios.get(`/api/chat/${username}/findChat`)
             console.log('Found chat:', res.data)
-
+           
             // open chat and add chat to logged in user
            joinChat(res.data.chat._id)
             
@@ -120,33 +118,37 @@ const ChatAway = React.memo(({loginStatus, roomsData, loggedInUser}) => {
             await axios.patch(`/api/users/${userId}/addChat`, {chats: res.data.chat._id, })
            
         } catch (err) {
-            console.log(err.response)
-            // if theres no existing chat history, create it
-            createChat(username)    
-            
+            console.log('Start chat err', err.response)
+            // if theres no existing chat history, create it  
+            // because of error, it requires and additional click! so fix it!!
+           createChat(username) 
         }
         
     }
-
+    const logoutAndLeaveChats = () => {
+        handleLogout()  
+        if (userInRoom) leaveRoom(userInRoom._id)
+        if (userInChat) leaveChat(userInChat._id)
+    }
 
     // toggle the Sidebar on xs
     const [toggleBar, setToggleBar] = useState(false);
     const handleToggleBar = () => setToggleBar(!toggleBar);
 
     useEffect( () => {
-        if (loginStatus === "logged-out") {
-            Router.push('/index');
-          }
+        if (loginStatus === "logged-out") Router.replace('/index');
+        // if (loginStatus === "No logged in user!" || "User login expired!") Router.replace('/login')
+
     }, [loginStatus])
 
-    if (roomsError || userError) return <DataError/>
+    if (roomsError || joinError) return <DataError/>
     return (
         <>
             <Head>
                 <title>ChatAway!</title>
             </Head>
             <ChatAppContext.Provider value={{allRooms: rooms?.doc,  joinRoom, leaveRoom, userInRoom, joinError, deleteRoom, 
-                startChat, removeChat, joinChat, userInChat, leaveChat, handleToggleBar, setToggleBar }}>
+                startChat, removeChat, joinChat, userInChat, leaveChat, handleToggleBar, setToggleBar, logoutAndLeaveChats}}>
 
                 <Grid container style={{ border: '2px solid navy'}}>
                     <SidebarChat handleToggleBar={handleToggleBar} toggleBar={toggleBar}/>
@@ -165,11 +167,6 @@ export async function getServerSideProps() {
     const r = await axios('/api/rooms');
     const roomsData = r.data;
 
-    // const res = await axios('/api/users/me');
-    // const friendsData= res.data.friends;
-
-    // const response = await axios(`/api/rooms/${userInRoom?._id}/room-messages`);
-    // const messagesData = response.data
-    return { props: { roomsData} }
+    return { props: {roomsData} }
 }
 

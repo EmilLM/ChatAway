@@ -3,7 +3,8 @@
       "baseUrl": ".",
       "paths": {
         "@/ChatApp*": ["components/ChatApp*"],
-        "@/General*": ["components/General*"]
+        "@/General*": ["components/General*"],
+        "@*":     ["components/ChatApp/App*"]
       }
     }
   }

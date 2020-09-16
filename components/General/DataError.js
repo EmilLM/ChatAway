@@ -2,6 +2,7 @@ import React from 'react';
 import ErrorIcon from '@material-ui/icons/Error';
 
 const DataError = () => {
+    
     return ( 
         <div className="dataError">
             <ErrorIcon/>

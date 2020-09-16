@@ -184,7 +184,9 @@
     overflow-x: hidden;
     list-style: none;
     margin: 0;
-    
+      div {
+        margin-left: 20px;
+      }
     ul {
       padding: 0;
       display: flex;
@@ -208,6 +210,11 @@
     }
     
     
+  }
+}
+.onlineAvatar {
+  img {
+    opacity: 1;
   }
 }
 .offlineAvatar {

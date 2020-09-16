@@ -5,9 +5,6 @@ import ChatForm from 'components/General/ChatForm'
 import axios from 'axios';
 import {mutate} from 'swr'
 
-import IconButton from '@material-ui/core/IconButton';
-import SendIcon from '@material-ui/icons/Send';
-
 export default function DirectChatForm({data}) {
 
     const {userInChat} = useContext(ChatAppContext);

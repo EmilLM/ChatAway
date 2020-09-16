@@ -12,7 +12,7 @@ const Friend = React.memo(({user}) => {
     const {loggedInUser} = useContext(UserContext);
     const {startChat, setToggleBar} = useContext(ChatAppContext);
 
-    const status =  user.connected && "offlineAvatar";
+    const status =  user.connected ? "onlineAvatar" : "offlineAvatar";
 
     const removeFriend = async (userId) => {
         // remove friend from logged in user

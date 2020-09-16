@@ -10,7 +10,7 @@ const handleCastErrorDB = err => {
   const handleDuplicateFieldsDB = err => {
     //   regex for text between quotes
     const value = err.message.match(/"(.*?)"/)[1];
-    const message = `${value} is taken. Please use another!`;
+    const message = `${value} is taken. Please use a different one!`;
     return new AppError(message, 400);
   };
   

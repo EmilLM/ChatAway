@@ -26,7 +26,7 @@ const createSendToken = (user, statusCode, req, res, rememberMe) => {
     const cookieOptions = {
         expires: new Date(Date.now() + maxAge),
         httpOnly: true,
-        secure : req.secure  || req.headers('x-forward-proto') === 'https',
+        // secure : req.secure  || req.headers('x-forward-proto') === 'https',
         sameSite: 'strict',
         path: '/'
     };
@@ -57,7 +57,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     const url = `${req.protocol}://${req.get('host')}/user-profile`;
     await new Email(newUser, url).sendWelcome()
 
-    if (!newUser) return next(new AppError('Could not create account!', 401));
+    if (!newUser) return next(new AppError('Unable to create account!', 401));
     // errors for existing users with email/name
     // password do not match
 
@@ -70,7 +70,7 @@ exports.login = catchAsync(async (req, res, next) => {
     
     // 1. Check if email/password exist
     if (!email || !password) {
-        return next(new AppError('Please enter your email and password', 400)) 
+        return next(new AppError('Please enter your email and password!', 400)) 
     }
     // 2. Check if user exists && password matches
     const user = await User.findOne({email}).select('+password');
@@ -78,7 +78,7 @@ exports.login = catchAsync(async (req, res, next) => {
     await User.findByIdAndUpdate(user.id, {connected: true})
 
     if (!user || !(await user.correctPassword(password, user.password))) {
-        return next(new AppError('Incorrect email or password', 401))
+        return next(new AppError('Incorrect email or password!', 401))
     }
 
     // 3.If everything is ok, send jwt to client via cookie
@@ -222,7 +222,7 @@ exports.resetPassword = catchAsync( async (req, res, next) => {
 
     // 2. If token not expired, user exists, set new pass.
     if (!user) {
-        return next(new AppError('Reset token is invalid or has expired', 400))
+        return next(new AppError('Reset token is invalid or has expired!', 400))
     }
     user.password = req.body.password;
     user.passwordConfirm = req.body.passwordConfirm;
@@ -241,11 +241,11 @@ exports.resetPassword = catchAsync( async (req, res, next) => {
 exports.updatePassword = catchAsync( async (req, res, next) => {
     // 1. Get user from collection   check id if errors!!
     const user = await User.findById(req.user.id).select('+password');
-    console.log(`User ${user}`)
+    // console.log(`User ${user}`)
 
     // 2.Check if POSTed current pass is correct
     if (!(await user.correctPassword(req.body.passwordCurrent, user.password))) {
-        return next(new AppError('Your current password is wrong.', 401));
+        return next(new AppError('Your current password is wrong!', 401));
     }
 
     // 3. If so, update pass

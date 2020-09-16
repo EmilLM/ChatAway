@@ -3,7 +3,7 @@ const authController = require('../controllers/authController');
 const router = express.Router();
 
 
-// routes for other pages + mw
+// get loggedInUserRouter + mw
 
 router.use(authController.isLoggedIn);
 
@@ -17,11 +17,11 @@ router.get('/', (req, res, next) => {
     // console.log(req.user);
     if (!req.cookies) {
         return res.json({
-            status: "No logged in user!"
+            status: "User login expired!"
         });
     }
     if (!req.user) {
-        return res.json({status: 'no user'})
+        return res.json({status: "No logged in user!"})
     }
     
 })

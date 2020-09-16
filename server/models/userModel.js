@@ -8,10 +8,10 @@ const crypto = require('crypto');
 const usersSchema =  new mongoose.Schema({
     username: {
         type: String, 
-        unique: [true, "Name must be unique"],
-        maxlength: [30, 'Username must have max 15 characters'],
-        minlength: [2, 'Username must be longer than 2 characters'],
-        validate: [validator.isAlphanumeric, "Username must only contain letters and numbers"]
+        unique: [true, "Name must be unique!"],
+        maxlength: [30, 'Username must have max 15 characters!'],
+        minlength: [2, 'Username must be longer than 2 characters!'],
+        validate: [validator.isAlphanumeric, "Username must only contain letters and numbers!"]
     },
     email : {
         type: String,
@@ -23,18 +23,18 @@ const usersSchema =  new mongoose.Schema({
     password: {
         type: String,
         required: [true, "Must enter password"],
-        minlength: [6, "Password must be longer than 6 characters"],
+        minlength: [6, "Password must 8 or more characters!"],
         select: false
     },
     passwordConfirm: {
         type: String,
-        required: [true, "Please confirm your password"],
+        required: [true, "Please confirm your password!"],
         validate: {
             // this only works on create/save! not update methods
             validator: function(el) {
                 return el === this.password;
             },
-            message: 'Passwords do not match'
+            message: 'Passwords do not match!'
         }
     },
     passwordChangedAt: Date,

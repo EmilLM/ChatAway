@@ -8,7 +8,7 @@ import {Button} from '@material-ui/core';
 const Index = ({loggedInUser}) => {
 
   useEffect( ()=> {
-    if (loggedInUser) Router.push('/chatAway')
+    if (loggedInUser) Router.replace('/chatAway')
   },[loggedInUser])
     return (
       <>

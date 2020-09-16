@@ -39,7 +39,7 @@ const SignupPage = () => {
             handleAuth(res.data.data)
             setIsLoading(false);
         } catch(error) {
-            setSignupError(error);
+            setSignupError(error.response);
             console.warn(error.response);
             setIsLoading(false);
         }
@@ -107,7 +107,7 @@ const SignupPage = () => {
                         <FormikInput placeholder="Confirm password"
                             name="passwordConfirm" type="password"
                         />
-                        {signupError?<small>{signupError.response.data.message}!</small>:null}
+                        {signupError?<small>{signupError.data.message}!</small>:null}
                     
                         <Button variant="contained" color="primary" type="submit" className="customButton" disabled={isLoading}>
                             {!isLoading?"Submit":<CircularProgress style={{color:"white"}} size={25.5}/>}

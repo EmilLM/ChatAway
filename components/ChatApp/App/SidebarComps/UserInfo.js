@@ -25,7 +25,7 @@ export default function UserInfo() {
                     <Avatar src={`/uploads/userAvatars/${loggedInUser.avatar}`} 
                         alt="user-image" className="user-image">
                         {loggedInUser.username[0]}
-                    </Avatar>
+                    </Avatar> 
                     <span>{loggedInUser.username}</span>
                 </a>
             </Link> 

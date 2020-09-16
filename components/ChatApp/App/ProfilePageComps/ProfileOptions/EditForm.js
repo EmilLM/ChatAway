@@ -21,6 +21,7 @@ const EditForm = () => {
             })
             console.log(res.data);
             setEdited(true);
+            setError(null)
         } catch (err) {
             setError(err.response)
         }
@@ -58,7 +59,7 @@ const EditForm = () => {
                     
 
                     {error
-                    ?<small>{error.data.message}!</small>
+                    ?<small>{error.data.message}</small>
                     :edited
                         ?<small className="edited">Profile changed!</small>
                         : null}

@@ -1,8 +1,5 @@
-import React, {useEffect, useContext} from "react";
-import Router from 'next/router';
-
-import UserContext from "components/General/UserContext";
-
+import React, {useContext} from "react";
+import ChatAppContext from '@/General/ChatAppContext'
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import OptionsToggle from './OptionsToggle';
@@ -11,12 +8,9 @@ import {Edit, LockOpen, History, DeleteForever, ExitToApp} from '@material-ui/ic
 
 const SidebarProfile = ({handleToggle, toggleBar}) => {
 
-    const {handleLogout, loggedInUser} = useContext(UserContext);
+    const {logoutAndLeaveChats} = useContext(ChatAppContext);
 
-    // useEffect( () => {
-    //     if  (!loggedInUser) Router.push('/index');
-    //  })
-    
+
     if (!toggleBar) return ( 
         <Grid component={Box} item sm={3} xs="auto" id="appSidebar" display={{ xs: 'none', sm: 'block' }}>
             <div className="optionsContainer"> 
@@ -34,7 +28,7 @@ const SidebarProfile = ({handleToggle, toggleBar}) => {
                     <History fontSize="small" />
                 </SidebarOptions>
 
-                <SidebarOptions text={"Logout"} link={"/index"} handleState={handleLogout}>
+                <SidebarOptions text={"Logout"} link={"/index"} handleState={logoutAndLeaveChats}>
                     <ExitToApp fontSize="small" />
                 </SidebarOptions>
 

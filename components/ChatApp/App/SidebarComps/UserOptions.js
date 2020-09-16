@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 
-import UserContext from "components/General/UserContext";
+import ChatAppContext from "@/General/ChatAppContext";
 import { withStyles } from '@material-ui/core/styles';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -53,7 +53,7 @@ export default function CustomizedMenus() {
   const handleClick = (event) => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
 
-  const {handleLogout} = useContext(UserContext);
+  const {logoutAndLeaveChats} = useContext(ChatAppContext);
 
   return (
     <>
@@ -74,7 +74,7 @@ export default function CustomizedMenus() {
             onClose={handleClose}
             
       >
-        <StyledMenuItem onClick={handleLogout}>
+        <StyledMenuItem onClick={logoutAndLeaveChats}>
             <ListItemIcon>
             <ExitToAppIcon fontSize="small" />
             </ListItemIcon>

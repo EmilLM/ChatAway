@@ -35,7 +35,7 @@ const RoomWindow = () => {
             <RoomInfo />
             <div className="joinRoom">
                 <div className="messageList">
-                <div className="roomDescription">{userInRoom.description}</div>
+                {userInRoom.description && <div className="roomDescription">{userInRoom.description}</div>}
                     {data?.roomMessages.map(message => {
                         // to avoid username display on consecutive messages from the same user
                         const showName = !lastSender || message.user !== lastSender; 
