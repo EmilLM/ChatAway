@@ -1,5 +1,5 @@
 import React, {useContext} from "react";
-import ChatAppContext from '@/General/ChatAppContext'
+import UserContext from '@/General/UserContext'
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import OptionsToggle from './OptionsToggle';
@@ -8,7 +8,7 @@ import {Edit, LockOpen, History, DeleteForever, ExitToApp} from '@material-ui/ic
 
 const SidebarProfile = ({handleToggle, toggleBar}) => {
 
-    const {logoutAndLeaveChats} = useContext(ChatAppContext);
+    const {handleLogout} = useContext(UserContext);
 
 
     if (!toggleBar) return ( 
@@ -28,7 +28,7 @@ const SidebarProfile = ({handleToggle, toggleBar}) => {
                     <History fontSize="small" />
                 </SidebarOptions>
 
-                <SidebarOptions text={"Logout"} link={"/index"} handleState={logoutAndLeaveChats}>
+                <SidebarOptions text={"Logout"} link={"/index"} handleState={handleLogout}>
                     <ExitToApp fontSize="small" />
                 </SidebarOptions>
 

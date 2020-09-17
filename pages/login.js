@@ -86,7 +86,7 @@ const LoginPage = () => {
                         <FormikInput name="password"  type="password" label="Password"/>
                         <FormikCheckbox name="rememberMe">Remember me?</FormikCheckbox>
 
-                        {error?<small>{error.data.message}</small>:null}
+                        {error&&<small>{error.data.message}</small>}
                     
                         <Button variant="contained" color="primary" type="submit" className="customButton" disabled={isLoading}>
                             {!isLoading?"Submit":<CircularProgress style={{color:"white"}} size={25.5}/>}

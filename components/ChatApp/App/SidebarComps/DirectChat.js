@@ -14,7 +14,7 @@ const DirectChat = ({chat}) => {
 
     const [hover, setHover] = useState(false);
 
-    const chatUsername = chat?.participants.filter( (name) =>  name !== loggedInUser?.username)
+    const chatUsername = chat?.participants.filter( name => name !== loggedInUser?.username)
     const {data: userChat} = useSWR(`/api/users/${chatUsername}/find-user`);
     const status =  userChat?.user.connected ? "online" : "offline";
     

@@ -10,7 +10,6 @@ import useSWR, { mutate, trigger } from 'swr';
 import axios from 'axios'
 
 const SearchAdd = () => {
-    // const {data, error} = useSWR(`/api/users/?username=${values.username}`);
 
     const {loggedInUser} = useContext(UserContext);
     const {startChat} = useContext(ChatAppContext)
@@ -24,13 +23,19 @@ const SearchAdd = () => {
         username = username.trim()[0].toUpperCase()  + username.slice(1).toLowerCase(); 
         try {
             const res = await axios.get(`/api/users/?username=${username}`);
-            if (res.data.results > 0) {
+            if (username === loggedInUser.username) {
+                setSearch("You can't befriend yourself!")
+                setIsLoading(false);
+                setError(null)
+            console.log('search results:', res.data)
+            } else if(res.data.results > 0) {
                 setSearch(res.data)
                 setIsLoading(false);
-            console.log('search results:', res.data)
+                setError(null)
             } else {
                 setSearch('No users found!')
                 setIsLoading(false);
+                setError(null)
             }
             
         } catch (err) {
@@ -93,6 +98,7 @@ const SearchAdd = () => {
                         })
                     :<p style={{margin: "15px"}}>{search}</p>
                 }
+                {error&&<small>{error.data.message}</small>}
             </ul>
         </>
      );
