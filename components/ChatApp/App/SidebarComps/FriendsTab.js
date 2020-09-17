@@ -8,7 +8,7 @@ import Friend from "./Friend"
 import useSWR from 'swr';
 
 const FriendsTab = () => {
-    const [toggleTab, setToogleTab] = useState(true);
+    const [toggleTab, setToogleTab] = useState(false);
     const handleToggle = () => setToogleTab(!toggleTab);
 
     const [toggleModal, setToggleModal] = useState(false);

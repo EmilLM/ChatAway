@@ -76,7 +76,7 @@ const ChatInfo = () => {
             <SidebarToggleButton />
             <div className="chatUserInfo">
                 <Avatar src={`/uploads/userAvatars/${data?.user.avatar}`} 
-                            alt="user-image" className="user-image">
+                            alt="user-image" className="user-image" type="text/plain">
                             {data?.user.username[0]}
                 </Avatar>
                 <h2>{chatWith}</h2>

@@ -9,7 +9,7 @@ import useSWR from 'swr';
 
 
 const DirectChatTab = () => {
-    const [toggleTab, setToggleTab] = useState(true);
+    const [toggleTab, setToggleTab] = useState(false);
     const handleToggle = () => setToggleTab(!toggleTab);
 
     const [toggleModal, setToggleModal] = useState(false);

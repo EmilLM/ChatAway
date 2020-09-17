@@ -13,7 +13,7 @@ const ProfileDetails = ({data}) => {
 
     const [file, setFile] = useState();
     const [filename, setFilename] = useState('Change avatar image')
-  
+    const [error, setError] = useState(false)
 
     const handleChange = e => {
         setFile(e.target.files[0]);
@@ -30,9 +30,10 @@ const ProfileDetails = ({data}) => {
                 headers: { 'Content-Type': 'multipart/form-data'}
             })
             console.log('Avatar changed', res.data);
-            
+            setError(false)
         } catch (err) {
             console.log(err.response)
+            setError(err.response.data)
         }
         
         trigger('api/users/me');
@@ -42,21 +43,26 @@ const ProfileDetails = ({data}) => {
     
     return ( 
         <div className="details">
-            <div>
+            <div className="form-container">
                 <Avatar src={`/uploads/userAvatars/${data.doc.avatar}`} 
                     alt="user-image" className="profileImage">
                     {data.doc.username[0]}
                 </Avatar>
                 <form onSubmit={handleSubmit}>
                     <label htmlFor="avatar"  className="uploadAvatar">{filename}
-                        <input type="file" id="avatar" accept="image/*" name="avatar" style={{display: "none"}} 
-                        onChange={handleChange} 
+                        <input 
+                            type="file" id="avatar" 
+                            accept="image/*" name="avatar" 
+                            style={{display: "none"}} 
+                            onChange={handleChange} 
                         />
                     </label>
+                   
                     <IconButton type="submit" disabled={!file}  color="primary">
                         <PublishIcon/>
                     </IconButton>
                 </form>
+                {error &&<small>{error.message}</small>}
             </div>
             
             <div className="userDetails">

@@ -31,8 +31,9 @@ const ChatAway = React.memo(({loginStatus, roomsData, loggedInUser, handleLogout
 
     const leaveRoom = async (roomId) => {
         try {
-            await axios.patch(`/api/rooms/${roomId}/leave`, {users: loggedInUser._id})
+            const res = await axios.patch(`/api/rooms/${roomId}/leave`, {users: loggedInUser._id})
             setUserInRoom(false)
+            console.log('Left room', res.data)
         } catch(err) {
             // add error handling
             console.log(err.response)
@@ -86,8 +87,9 @@ const ChatAway = React.memo(({loginStatus, roomsData, loggedInUser, handleLogout
 
     const leaveChat = async (chatId) => {
         try {
-            await axios.patch(`/api/chat/${chatId}/removeUser`, {activeUsers: loggedInUser._id});
+            const res = await axios.patch(`/api/chat/${chatId}/removeUser`, {activeUsers: loggedInUser._id});
             setUserInChat(false);
+            console.log('Left chat', res.data)
         } catch(err) {
             console.log('Left chat error', err)
         }
@@ -108,9 +110,10 @@ const ChatAway = React.memo(({loginStatus, roomsData, loggedInUser, handleLogout
     const startChat = async (username, userId) => {
         // find chat based on your and friend's name
         try {
+            
             const res = await axios.get(`/api/chat/${username}/findChat`)
             console.log('Found chat:', res.data)
-           
+          
             // open chat and add chat to logged in user
            joinChat(res.data.chat._id)
             
@@ -121,7 +124,8 @@ const ChatAway = React.memo(({loginStatus, roomsData, loggedInUser, handleLogout
             console.log('Start chat err', err.response)
             // if theres no existing chat history, create it  
             // because of error, it requires and additional click! so fix it!!
-           createChat(username) 
+            createChat(username) 
+        
         }
         
     }
@@ -138,7 +142,6 @@ const ChatAway = React.memo(({loginStatus, roomsData, loggedInUser, handleLogout
     useEffect( () => {
         if (loginStatus === "logged-out") Router.replace('/index');
         // if (loginStatus === "No logged in user!" || "User login expired!") Router.replace('/login')
-
     }, [loginStatus])
 
     if (roomsError || joinError) return <DataError/>
