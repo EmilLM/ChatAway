@@ -1,4 +1,4 @@
-a<p align="center">
+<p align="center">
  <a href="https://ibb.co/QJPSqH7"><img width=200px height=auto src="https://i.ibb.co/p1fVsK6/ChatAway.png" alt="ChatAway"  /></a>
 </p>
 
