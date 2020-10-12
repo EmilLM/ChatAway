@@ -7,7 +7,7 @@ import ChatAppContext from 'components/General/ChatAppContext'
 import axios from 'axios';
 import {mutate, trigger} from 'swr'
 
- const DirectChatMessage = React.memo((props) => {
+ const DirectChatMessage = (props) => {
    
     const {userInChat} = useContext(ChatAppContext);
     const {otherUserMessage, showName, message, data} = props;
@@ -102,6 +102,6 @@ import {mutate, trigger} from 'swr'
             
         </>
     )
-})
+}
 
-export default DirectChatMessage;
+export default React.memo(DirectChatMessage);

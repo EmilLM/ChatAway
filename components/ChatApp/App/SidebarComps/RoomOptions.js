@@ -14,8 +14,6 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
 
-
-
 const StyledMenu = withStyles({
   paper: {
     border: '2px solid #d3d4d5',
@@ -61,7 +59,7 @@ export default function RoomOptions({room}) {
   const handleDelete = () => {
     deleteRoom(room._id);
     mutate('/api/rooms')
-    trigger(`/api/rooms`)
+    trigger('/api/rooms')
   }
 
   return (

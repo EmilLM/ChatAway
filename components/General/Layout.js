@@ -5,14 +5,17 @@ import Footer from "./Footer";
 import Container from '@material-ui/core/Container';
 
 
-export default function Layout(props) {
+const Layout = React.memo(({children, loggedInUser}) => {
+    // layout rerenders on page change -> page is a prop child
     return (
         <>
-            <NavBar/>
-                <Container maxWidth="md"  className="container">
-                    {props.children}
-                </Container>
+            <NavBar loggedInUser={loggedInUser}/>
+            <Container maxWidth="md"  className="container">
+                {children}
+            </Container>
             <Footer/>
         </>
     )
-}
+});
+
+export default Layout;

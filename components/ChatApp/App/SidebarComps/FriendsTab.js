@@ -7,7 +7,7 @@ import SearchAdd from "./SearchAdd"
 import Friend from "./Friend"
 import useSWR from 'swr';
 
-const FriendsTab = () => {
+const FriendsTab = React.memo(() => {
     const [toggleTab, setToogleTab] = useState(false);
     const handleToggle = () => setToogleTab(!toggleTab);
 
@@ -39,6 +39,6 @@ const FriendsTab = () => {
             }
         </>
      );
-}
+})
  
 export default FriendsTab;

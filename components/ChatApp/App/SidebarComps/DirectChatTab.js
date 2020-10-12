@@ -8,7 +8,7 @@ import DirectChat from "./DirectChat"
 import useSWR from 'swr';
 
 
-const DirectChatTab = () => {
+const DirectChatTab = React.memo(() => {
     const [toggleTab, setToggleTab] = useState(false);
     const handleToggle = () => setToggleTab(!toggleTab);
 
@@ -42,6 +42,6 @@ const DirectChatTab = () => {
             }
         </>
      );
-}
+})
  
 export default DirectChatTab;

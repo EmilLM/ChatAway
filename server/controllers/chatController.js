@@ -19,12 +19,13 @@ exports.friendChat = catchAsync( async (req, res, next) => {
     const targetName = req.params.name
     if (loggedInName === targetName) return next(new AppError("Can't chat with yourself!"))
     const chat = await Chat.findOne({name: loggedInName + '--' + targetName});
-    if (!chat) return next(new AppError('No chat found!', 404));
+    // if (!chat) return next(new AppError('No chat found!', 404));
     res.json({
         status: 'success',
-        chat
+        chat: chat? chat: "No chat history"
     })
 })
+
 
 exports.getChatMessages = catchAsync ( async (req, res, next) => {
     const chat = await Chat.findById(req.params.chatId);

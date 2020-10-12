@@ -5,9 +5,6 @@ import ChatForm from 'components/General/ChatForm'
 import axios from 'axios';
 import {mutate} from 'swr'
 
-import IconButton from '@material-ui/core/IconButton';
-import SendIcon from '@material-ui/icons/Send';
-
 export default function RoomForm({data}) {
 
     const {userInRoom} = useContext(ChatAppContext);
@@ -21,7 +18,7 @@ export default function RoomForm({data}) {
         userAvatar: loggedInUser.avatar
     }
     const {roomMessages} = data;
-
+    
     const createMessage = async () => {
 
         mutate(`/api/rooms/${userInRoom._id}/room-messages`,{...data, roomMessages: [...roomMessages,  optimisticMessage]}, false)

@@ -32,4 +32,5 @@ router
     .get(authController.protect, chatController.getChatMessages)
 
 router.get('/:name/findChat', friendChat)
+
 module.exports = router;

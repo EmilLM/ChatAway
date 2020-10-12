@@ -10,6 +10,7 @@ const Index = ({loggedInUser}) => {
   useEffect( ()=> {
     if (loggedInUser) Router.replace('/chatAway')
   },[loggedInUser])
+
     return (
       <>
         <Head>

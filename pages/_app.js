@@ -15,6 +15,7 @@ import PropTypes from 'prop-types';
 import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from '../server/theme';
+import ErrorBoundary from "@/General/ErrorBoundary";
 
 
 if (process.env.NODE_ENV !== 'production') {
@@ -28,7 +29,7 @@ if (process.env.NODE_ENV !== 'production') {
 // }
 
 
-export default function MyApp({ Component, pageProps}) {
+const MyApp = ({ Component, pageProps}) => {
   
   
   const [loginStatus, setLoginStatus] = useState(false);
@@ -38,6 +39,8 @@ export default function MyApp({ Component, pageProps}) {
   // const {data: swrUser, error } = useSWR('/loggedIn', (...args) => axios(...args).then(res => res.data.user ))
   // console.log('SWR user', swrUser)
 
+  // use getServerSideProps for loggedInUser if there is a jwt cookie ->
+  // populate it as initialData in useSWR
  
   const checkLoginStatus = async () => {
     setLoading(true)
@@ -88,22 +91,25 @@ export default function MyApp({ Component, pageProps}) {
       Router.replace('/index');
     }
   }, [])
-  
+  // !whole app rerenders 4 times at start because of hooks changes, find fix
   if (loading) return null
   return (
     <UserContext.Provider value={{loggedInUser, handleLogout, handleAuth}}>
       <ThemeProvider theme={theme}>
-        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
         <SWRConfig value={{ fetcher: (...args) => axios(...args).then(res => res.data )}}>
-          <Layout >
-            <Component {...pageProps} loggedInUser={loggedInUser}  loginStatus={loginStatus} handleLogout={handleLogout}/>
+          <Layout loggedInUser={loggedInUser}>
+            <ErrorBoundary>
+              <Component {...pageProps} loggedInUser={loggedInUser}  loginStatus={loginStatus} handleLogout={handleLogout}/>
+            </ErrorBoundary>
           </Layout>
         </SWRConfig>
       </ThemeProvider>
     </UserContext.Provider>
   )
 }
+
+export default MyApp;
 MyApp.propTypes = {
   Component: PropTypes.elementType.isRequired,
   pageProps: PropTypes.object.isRequired,

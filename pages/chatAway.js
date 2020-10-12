@@ -57,6 +57,7 @@ const ChatAway = React.memo(({loginStatus, roomsData, loggedInUser, handleLogout
                 participants: [loggedInUser.username, username],
                 name: loggedInUser.username + '--' + username     
             })
+            console.log("created chat", res.data)
         } catch (err) {
             console.log('Create direct chat error', err.response)
             setJoinError(err.response)
@@ -113,19 +114,28 @@ const ChatAway = React.memo(({loginStatus, roomsData, loggedInUser, handleLogout
             
             const res = await axios.get(`/api/chat/${username}/findChat`)
             console.log('Found chat:', res.data)
-          
-            // open chat and add chat to logged in user
-           joinChat(res.data.chat._id)
-            
-            // add chat to target user
-            await axios.patch(`/api/users/${userId}/addChat`, {chats: res.data.chat._id, })
-           
-        } catch (err) {
-            console.log('Start chat err', err.response)
             // if theres no existing chat history, create it  
-            // because of error, it requires and additional click! so fix it!!
-            createChat(username) 
-        
+            if (res.data.chat === "No chat history") {
+                // create chat 
+                const resp = await axios.post('/api/chat', {
+                    participants: [loggedInUser.username, username],
+                    name: loggedInUser.username + '--' + username     
+                })
+                console.log('created chat', resp.data)
+                // open chat and add chat to logged in user
+                joinChat(resp.data.doc._id)
+           
+                // add chat to target user
+                await axios.patch(`/api/users/${userId}/addChat`, {chats: resp.data.doc._id, })
+            } else {
+                // open chat and add chat to logged in user
+                joinChat(res.data.chat._id)
+                console.log('Check else')
+                // add chat to target user
+                await axios.patch(`/api/users/${userId}/addChat`, {chats: res.data.chat._id, })
+            }
+        } catch (err) {
+            console.log('Start chat err', err)
         }
         
     }
@@ -155,7 +165,7 @@ const ChatAway = React.memo(({loginStatus, roomsData, loggedInUser, handleLogout
 
                 <Grid container style={{ border: '2px solid navy'}}>
                     <SidebarChat handleToggleBar={handleToggleBar} toggleBar={toggleBar}/>
-                    <ChatWindow />
+                    <ChatWindow /> 
                 </Grid>
 
             </ChatAppContext.Provider>

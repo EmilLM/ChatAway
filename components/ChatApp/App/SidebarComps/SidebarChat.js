@@ -8,7 +8,8 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 
 
-const SidebarChat = ({ toggleBar}) => {
+const SidebarChat = React.memo(({ toggleBar}) => {
+    console.log('Siderbar chat render')
     if (!toggleBar) return ( 
         <Grid component={Box} item sm={3} xs="auto" id="appSidebar" display={{ xs: 'none', sm: 'block' }}>
             <div className="sidebarContainer"> 
@@ -22,6 +23,6 @@ const SidebarChat = ({ toggleBar}) => {
     if (toggleBar) return (
         <SiderbarToggled toggleBar={toggleBar}/>
     )
-}
+})
  
 export default SidebarChat;

@@ -12,11 +12,9 @@
 .navbar {
   background: linear-gradient(to bottom, #2980b9, #6dd5fa, #ffffff);
   display: flex;
-  // justify-content: flex-start;
+  justify-content: flex-start;
   height: 10vh;
-  @media only screen and (max-width: 450px) {
-    justify-content: center;
-  }
+  padding-left: 15px;
   .logo {
     @media only screen and (min-width: 450px) {
       padding-left: 40px;
@@ -93,7 +91,8 @@
     margin-top: 2vmax;
     display: flex;
     justify-content: space-between;
-    width: 350px; 
+    width: 35%;
+    min-width: 330px;
   }
   .links {
     a {

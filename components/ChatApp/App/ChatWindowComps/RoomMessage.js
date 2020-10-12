@@ -7,7 +7,7 @@ import ChatAppContext from 'components/General/ChatAppContext'
 import axios from 'axios';
 import useSWR, {mutate, trigger} from 'swr'
 
- const DirectChatMessage = React.memo((props) => {
+ const RoomMessage = (props) => {
     
     const {userInRoom} = useContext(ChatAppContext);
     const {showName, message, data, otherUserMessage} = props;
@@ -52,6 +52,7 @@ import useSWR, {mutate, trigger} from 'swr'
         setEdit(false)
         trigger(`/api/rooms/${userInRoom._id}/room-messages`)
     }
+    console.log('Message render')
     return (
         <>
             <div 
@@ -99,6 +100,6 @@ import useSWR, {mutate, trigger} from 'swr'
             
         </>
     )
-})
+}
 
-export default DirectChatMessage;
+export default React.memo(RoomMessage);

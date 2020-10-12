@@ -20,7 +20,7 @@ const RoomWindow = () => {
             el.current.scrollIntoView();
         }  
     }, [data]);
-
+    
     // cleanup
     useEffect(()=> {
         return () => leaveRoom(userInRoom._id)
@@ -28,14 +28,14 @@ const RoomWindow = () => {
 
     // to avoid username display on consecutive messages from the same user
     let lastSender = undefined;
-
+    console.log('Room chat window')
     if (error) return <DataError/>
     if (data) return (  
         <>  
             <RoomInfo />
             <div className="joinRoom">
                 <div className="messageList">
-                {userInRoom.description && <div className="roomDescription">{userInRoom.description}</div>}
+                    {userInRoom.description && <div className="roomDescription">{userInRoom.description}</div>}
                     {data?.roomMessages.map(message => {
                         // to avoid username display on consecutive messages from the same user
                         const showName = !lastSender || message.user !== lastSender; 
@@ -54,10 +54,10 @@ const RoomWindow = () => {
                     })}
                 </div>
             </div>
-            <RoomForm data={data} />  
+            <RoomForm  data={data}/>  
         </>
     )
-    return (
+    if (!data) return (
         <div className="loading">
             <CircularProgress />
         </div>
@@ -67,8 +67,9 @@ const RoomWindow = () => {
 export default RoomWindow;
 
 
-const RoomInfo = () => {
+const RoomInfo = React.memo(() => {
     const {userInRoom} = useContext(ChatAppContext)
+    console.log('Room Info render')
     return (    
         <div className="roomInfo">
             <SidebarToggleButton/>
@@ -76,4 +77,7 @@ const RoomInfo = () => {
             <RoomDetails/>
         </div> 
     )
-}
+})
+
+
+ 

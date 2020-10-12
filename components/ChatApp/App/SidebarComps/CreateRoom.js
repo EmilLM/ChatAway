@@ -57,10 +57,7 @@ const CreateRoom = ({toggleModal, setToggleModal}) => {
                 isPrivate: Yup.boolean()
                 })}
                 onSubmit={(values, { resetForm}) => {
-                    
                     createRoom(values.name, values.description, values.isPrivate);
-                    mutate('/api/rooms')
-                    trigger('/api/rooms')
                     resetForm();     
                 }}
             >

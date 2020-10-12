@@ -52,7 +52,7 @@ const LoginPage = () => {
  
     // const [passMask, setPassMask] = useState(false);
     // const handlePassMask = () => setPassMask(!passMask);
-
+    
     if (loggedInUser) return <div className="loading"><CircularProgress /></div>
     if (!loggedInUser) return (
         <>

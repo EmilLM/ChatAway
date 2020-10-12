@@ -61,6 +61,7 @@ app.use(hpp({
 
 // Misc
 // compressing text sent to clients
+// also heroku doesnt user gzip
 app.use(compression())
 
 // test MW
