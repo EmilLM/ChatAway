@@ -12,7 +12,7 @@
 
 ---
 
-<h1 align="center"><a href="chat-away-app.herokuapp.com" >Live demo</a></h1>
+<h1 align="center"><a href="https://chat-away-app.herokuapp.com" >Live demo</a></h1>
 
 <p align="center"> Slack-type chat app with fully built back-end.
     <br> 
